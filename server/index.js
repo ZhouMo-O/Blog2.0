@@ -3,7 +3,7 @@ const app = express();
 const PORT = 5555;
 
 //-------------------------中间件--------------------------------
-require("./plugin/db")(app);
+require("./plugin/db")(app); //db
 require("./router/router")(app);
 
 app.listen(PORT, () => {
