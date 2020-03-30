@@ -19,6 +19,16 @@
             <i class="el-icon-menu"></i>
             <span slot="title">首页</span>
           </el-menu-item>
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-s-order"></i>文章管理
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="/article/create">发布文章</el-menu-item>
+              <el-menu-item index="/article/list">文章列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
 
