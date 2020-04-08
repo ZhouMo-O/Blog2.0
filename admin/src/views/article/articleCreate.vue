@@ -1,6 +1,6 @@
 <template>
   <div id="editor">
-    <mavon-editor :ishljs="true" style="height: 100%"></mavon-editor>
+    <mavon-editor @save="saveDoc" style="height: 100%"></mavon-editor>
   </div>
 </template>
 
@@ -10,6 +10,11 @@ import "mavon-editor/dist/css/index.css";
 export default {
   data() {
     return {};
+  },
+  methods: {
+    saveDoc(markdown, html) {
+      console.log(markdown, html);
+    },
   },
   components: {
     mavonEditor,
