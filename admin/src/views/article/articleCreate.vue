@@ -7,13 +7,17 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
+import { restPostData } from "../../Api/api";
 export default {
   data() {
-    return {};
+    return { model: {} };
   },
   methods: {
-    saveDoc(markdown, html) {
-      console.log(markdown, html);
+    async saveDoc(markdown, html) {
+      this.model.markdown = markdown;
+      this.model.html = html;
+      let data = await restPostData("blog", this.model);
+      console.log(data);
     },
   },
   components: {
