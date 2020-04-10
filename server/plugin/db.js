@@ -1,10 +1,10 @@
-module.exports = app => {
+module.exports = (app) => {
   const mongoose = require("mongoose");
   mongoose.connect(
-    `mongodb://127.0.0.1/starry`,
+    `mongodb://127.0.0.1:27017/starry`,
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     },
     (err, data) => {
       if (err) throw err;

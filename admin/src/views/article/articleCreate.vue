@@ -7,7 +7,7 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
-import { restPostData } from "../../Api/api";
+import { restPostData } from "../../api/api";
 export default {
   data() {
     return { model: {} };

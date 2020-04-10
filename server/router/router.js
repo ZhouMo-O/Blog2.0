@@ -1,25 +1,27 @@
 module.exports = (app) => {
   const express = require("express");
-  const router = express.Router({ mergeParams: true });
+  console.log(new Date().toLocaleString());
+
+  const router = express.Router({
+    mergeParams: true,
+  });
+
   const resourceMiddleware = require("../midware/resource");
 
   router.post("/", async (req, res) => {
     const model = await req.Model.create(req.body);
     console.log(`创建数据`, req.body);
-    console.log(model);
     res.send(model);
   });
 
   router.get("/", async (req, res) => {
-    const item = await req.Model.find();
+    const item = await req.Model.find().populate("relatedTag");
     console.log(`获取 ${req.params.resource}列表`);
     res.send(item);
   });
 
   router.get("/:id", async (req, res) => {
-    const item = await req.Model.findById(req.params.id).populate(
-      "relatedProject"
-    );
+    const item = await req.Model.findById(req.params.id).populate("relatedTag");
     console.log(`查找 ${req.params.id}`);
     console.log(item);
     res.send(item);

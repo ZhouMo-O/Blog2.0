@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       userName: "",
-      title: "暂时么的"
+      title: "暂时么的",
     };
   },
   methods: {
@@ -61,14 +61,14 @@ export default {
         this.$router.push("/login");
         this.$message({
           type: "success",
-          message: "退出登录成功"
+          message: "退出登录成功",
         });
       }
-    }
+    },
   },
   created() {
     this.getUser();
-  }
+  },
 };
 </script>
 <style>
