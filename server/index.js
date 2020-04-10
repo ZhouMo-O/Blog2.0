@@ -1,6 +1,6 @@
 const express = require("express");
+const bodyParser = require("body-parser"); //用于req.body获取值的
 const app = express();
-var bodyParser = require("body-parser"); //用于req.body获取值的
 app.use(bodyParser.json());
 // 创建 application/x-www-form-urlencoded 编码解析
 app.use(bodyParser.urlencoded({ extended: false }));
