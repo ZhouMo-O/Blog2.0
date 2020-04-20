@@ -17,13 +17,13 @@
       </template>
       <template slot-scope="scope">
         <el-button
-          @click="$router.push(`/blog/view/${scope.row._id}`)"
+          @click="$router.push(`/article/view/${scope.row._id}`)"
           type="text"
           size="small"
           >查看</el-button
         >
         <el-button
-          @click="$router.push(`/blog/edit/${scope.row._id}`)"
+          @click="$router.push(`/article/edit/${scope.row._id}`)"
           type="text"
           size="small"
           >编辑</el-button
@@ -48,24 +48,20 @@ export default {
   },
   methods: {
     async fetch() {
-      const data = await restgetAll("blog");
+      const data = await restgetAll("article");
       this.items = data.data;
     },
     SearchTable() {
       console.log("1");
     },
     async remove(row) {
-      this.$confirm(
-        `确定删除 ${row.versionNumber} 吗？,该操作不可逆`,
-        "确认信息",
-        {
-          distinguishCancelAndClose: true,
-          confirmButtonText: "确定",
-          cancelButtonText: "取消"
-        }
-      )
+      this.$confirm(`确定删除 ${row.title} 吗？,该操作不可逆`, "确认信息", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
         .then(async () => {
-          await restDeleteOne("blog", row._id);
+          await restDeleteOne("article", row._id);
           // if (!row.fileName == " " || !row.fileName == undefined) {
           //   //如果根本上传文件，就不用去后台删除文件了。
           //   await deleteFile(row.fileName);
@@ -83,7 +79,7 @@ export default {
     }
   },
   created() {
-    this.id ? this.findblogTag() : this.fetch();
+    this.id ? this.findarticleTag() : this.fetch();
   }
 };
 </script>

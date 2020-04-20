@@ -17,21 +17,27 @@ const router = new VueRouter({
         {
           path: "/home",
           name: home,
-          component: home,
+          component: home
         },
         {
           path: "/article/create",
           name: articleCreate,
-          component: articleCreate,
+          component: articleCreate
         },
         {
           path: "/article/list",
           name: articleList,
-          component: articleList,
+          component: articleList
         },
-      ],
-    },
-  ],
+        {
+          path: "/article/edit/:id",
+          props: true,
+          name: articleCreate,
+          component: articleCreate
+        }
+      ]
+    }
+  ]
 });
 
 export default router;

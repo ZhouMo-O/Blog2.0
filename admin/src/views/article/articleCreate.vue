@@ -11,7 +11,14 @@
       </el-form-item>
       <el-form-item>
         <div id="editor">
-          <mavon-editor @save="saveDoc" style="height: 100%"></mavon-editor>
+          <mavon-editor
+            v-model="model.markdown"
+            @save="saveDoc"
+            style="height: 100%"
+            ref="md"
+            @imgAdd="imgAdd"
+            @imgDel="imgDel"
+          ></mavon-editor>
         </div>
       </el-form-item>
       <el-form-item style="margin-top: 1rem;">
@@ -26,25 +33,48 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
-import { restPostData } from "../../Api/api";
+import { restPostData, restgetOne, uploadFile } from "../../Api/api";
 export default {
+  name: "softWareList",
+  props: { id: {} },
   data() {
     return { model: {} };
   },
   methods: {
+    async imgAdd(pos, file) {
+      // console.log(pos, file);
+      let formdata = new FormData();
+      formdata.append("file", file);
+      let res = await uploadFile(formdata);
+
+      this.$refs.md.$img2Url(pos, res.data.url);
+      console.log(res);
+    },
+
+    async imgDel(pos) {
+      console.log(pos);
+    },
+
+    //根据ID获取要编辑的博客
+    async fetchBlog() {
+      let res = await restgetOne("article", this.id);
+      this.model = res.data;
+      console.log(this.model);
+    },
+
     async saveDoc(markdown, html) {
       this.model.markdown = markdown;
       this.model.html = html;
-      let data = await restPostData("blog", this.model);
+      let data = await restPostData("article", this.model);
       console.log(data);
     },
     async save(formName) {
       let res;
       if (this.id) {
         this.model.upDateTime = new Date().toLocaleString(); //输入更新时间
-        res = await restUpdata("blog", this.id, this.model);
+        res = await restUpdata("article", this.id, this.model);
       } else {
-        res = await restPostData("blog", this.model);
+        res = await restPostData("article", this.model);
       }
       this.$router.push("/article/list");
       this.$notify({
@@ -52,10 +82,14 @@ export default {
         type: "success",
         message: "保存成功"
       });
+      console.log(this.model);
     }
   },
   components: {
     mavonEditor
+  },
+  created() {
+    this.id && this.fetchBlog();
   }
 };
 </script>
@@ -63,7 +97,7 @@ export default {
 <style>
 #editor {
   margin: auto;
-  width: 90%;
+  width: 95%;
   height: 580px;
 }
 </style>

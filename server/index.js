@@ -1,12 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser"); //用于req.body获取值的
+const dotenv = require("dotenv");
 const app = express();
 app.use(bodyParser.json());
-// 创建 application/x-www-form-urlencoded 编码解析
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = 5555;
 
 //-------------------------中间件--------------------------------
+dotenv.config("./env");
+console.log(process.env.REGION);
 app.use(
   require("cors")({
     origin: [`http://localhost:8080`, `http://192.168.2.100:8080`],

@@ -42,4 +42,6 @@ module.exports = (app) => {
   });
 
   app.use("/api/rest/:resource", resourceMiddleware(), router);
+
+  require("../plugin/FileProcess")(app);
 };
