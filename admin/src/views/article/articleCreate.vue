@@ -21,6 +21,10 @@
           ></mavon-editor>
         </div>
       </el-form-item>
+      <el-form-item>
+        <el-switch v-model="model.value1" inactive-text="私密文章"> </el-switch>
+      </el-form-item>
+
       <el-form-item style="margin-top: 1rem;">
         <el-button type="primary" class="save" native-type="subumit"
           >保存</el-button
@@ -33,7 +37,12 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
-import { restPostData, restgetOne, uploadFile } from "../../Api/api";
+import {
+  restPostData,
+  restgetOne,
+  uploadFile,
+  restUpdata,
+} from "../../Api/api";
 export default {
   name: "softWareList",
   props: { id: {} },
@@ -65,7 +74,12 @@ export default {
     async saveDoc(markdown, html) {
       this.model.markdown = markdown;
       this.model.html = html;
-      let data = await restPostData("article", this.model);
+      if (this.id) {
+        let data = await restUpdata(`article`, this.id, this.model);
+      } else {
+        let data = await restPostData("article", this.model);
+      }
+
       console.log(data);
     },
     async save(formName) {
@@ -80,24 +94,24 @@ export default {
       this.$notify({
         title: "成功",
         type: "success",
-        message: "保存成功"
+        message: "保存成功",
       });
       console.log(this.model);
-    }
+    },
   },
   components: {
-    mavonEditor
+    mavonEditor,
   },
   created() {
     this.id && this.fetchBlog();
-  }
+  },
 };
 </script>
 
 <style>
 #editor {
   margin: auto;
-  width: 95%;
+  width: 100%;
   height: 580px;
 }
 </style>
