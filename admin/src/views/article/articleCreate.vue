@@ -22,7 +22,8 @@
         </div>
       </el-form-item>
       <el-form-item>
-        <el-switch v-model="model.value1" inactive-text="私密文章"> </el-switch>
+        <el-switch v-model="model.privacy" inactive-text="私密文章">
+        </el-switch>
       </el-form-item>
 
       <el-form-item style="margin-top: 1rem;">

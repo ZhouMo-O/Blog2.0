@@ -4,7 +4,16 @@
     </el-table-column>
     <el-table-column prop="title" label="博客标题" width="180">
     </el-table-column>
-    <el-table-column prop="address" label="博客简介"> </el-table-column>
+    <el-table-column prop="read" label="阅读"></el-table-column>
+    <el-table-column prop="like" label="点赞"></el-table-column>
+    <el-table-column prop="comment" label="评论"></el-table-column>
+    <el-table-column label="类型">
+      <template slot-scope="scope">
+        <i v-if="scope.row.privacy" class="el-icon-star-on"></i>
+        <i v-if="!scope.row.privacy" class="el-icon-view"></i>
+      </template>
+    </el-table-column>
+
     <el-table-column fixed="right" label="操作" width="300">
       <template slot="header" slot-scope="scope">
         <el-input
@@ -43,7 +52,7 @@ export default {
   data() {
     return {
       items: [],
-      search: ""
+      search: "",
     };
   },
   methods: {
@@ -58,7 +67,7 @@ export default {
       this.$confirm(`确定删除 ${row.title} 吗？,该操作不可逆`, "确认信息", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确定",
-        cancelButtonText: "取消"
+        cancelButtonText: "取消",
       })
         .then(async () => {
           await restDeleteOne("article", row._id);
@@ -70,17 +79,17 @@ export default {
           this.$notify({
             title: "成功",
             type: "success",
-            message: "删除成功"
+            message: "删除成功",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(`删除错误`, err);
         });
-    }
+    },
   },
   created() {
     this.id ? this.findarticleTag() : this.fetch();
-  }
+  },
 };
 </script>
 
