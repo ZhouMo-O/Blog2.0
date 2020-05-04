@@ -45,7 +45,12 @@
   </el-table>
 </template>
 <script>
-import { restgetAll, restDeleteOne, deleteFile } from "../../Api/api";
+import {
+  restgetAll,
+  restDeleteOne,
+  deleteFile,
+  filterBlog,
+} from "../../Api/api";
 export default {
   name: "softWareList",
   props: { id: {} },
@@ -63,6 +68,7 @@ export default {
     SearchTable() {
       console.log("1");
     },
+
     async remove(row) {
       this.$confirm(`确定删除 ${row.title} 吗？,该操作不可逆`, "确认信息", {
         distinguishCancelAndClose: true,
