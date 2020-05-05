@@ -29,6 +29,16 @@
               <el-menu-item index="/article/list">文章列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-s-order"></i>标签管理
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="/tag/create">添加标签</el-menu-item>
+              <el-menu-item index="/tag/list">标签列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
 

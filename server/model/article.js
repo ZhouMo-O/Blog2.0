@@ -28,10 +28,10 @@ const Schema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  parent: [
+  relatedTag: [
     {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "tag",
+      ref: "Tag",
     },
   ],
   createTime: {

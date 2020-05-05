@@ -5,6 +5,9 @@ import home from "../views/home.vue";
 import articleCreate from "../views/article/articleCreate";
 import articleList from "../views/article/articleList";
 
+import tagCreate from "../views/tag/tagCreate";
+import tagList from "../views/tag/tagList";
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -17,27 +20,43 @@ const router = new VueRouter({
         {
           path: "/home",
           name: home,
-          component: home
+          component: home,
         },
         {
           path: "/article/create",
           name: articleCreate,
-          component: articleCreate
+          component: articleCreate,
         },
         {
           path: "/article/list",
           name: articleList,
-          component: articleList
+          component: articleList,
         },
         {
           path: "/article/edit/:id",
           props: true,
           name: articleCreate,
-          component: articleCreate
-        }
-      ]
-    }
-  ]
+          component: articleCreate,
+        },
+        {
+          path: "/tag/create",
+          name: tagCreate,
+          component: tagCreate,
+        },
+        {
+          path: "/tag/list",
+          name: tagList,
+          component: tagList,
+        },
+        {
+          path: "/tag/edit/:id",
+          props: true,
+          name: tagCreate,
+          component: tagCreate,
+        },
+      ],
+    },
+  ],
 });
 
 export default router;

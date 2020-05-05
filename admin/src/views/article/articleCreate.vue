@@ -21,6 +21,21 @@
           ></mavon-editor>
         </div>
       </el-form-item>
+      <el-form-item label="添加标签" prop="relatedTag">
+        <el-select
+          class="select"
+          v-model="model.relatedTag"
+          multiple
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in tagList"
+            :key="item._id"
+            :label="item.tagName"
+            :value="item._id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-switch v-model="model.privacy" inactive-text="私密文章">
         </el-switch>
@@ -43,12 +58,13 @@ import {
   restgetOne,
   uploadFile,
   restUpdata,
+  restgetAll,
 } from "../../Api/api";
 export default {
   name: "softWareList",
   props: { id: {} },
   data() {
-    return { model: {} };
+    return { model: {}, tagList: [] };
   },
   methods: {
     async imgAdd(pos, file) {
@@ -63,6 +79,11 @@ export default {
 
     async imgDel(pos) {
       console.log(pos);
+    },
+
+    async getTag() {
+      let tagData = await restgetAll("tag");
+      this.tagList = tagData.data;
     },
 
     //根据ID获取要编辑的博客
@@ -105,6 +126,7 @@ export default {
   },
   created() {
     this.id && this.fetchBlog();
+    this.getTag();
   },
 };
 </script>
