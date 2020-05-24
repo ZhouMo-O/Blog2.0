@@ -1,8 +1,26 @@
 <template>
   <v-app>
-    <v-app-bar elevate-on-scroll :clipped-left="clipped" fixed app>
+    <v-app-bar elevate-on-scroll app>
       <v-toolbar-title v-text="title" />
-      <div><v-btn>首页</v-btn></div>
+      <v-col>
+        <v-btn-toggle v-model="text" tile color="deep-purple accent-3" group>
+          <v-btn value="left" @click="$router.push(`/test`)">
+            Left
+          </v-btn>
+
+          <v-btn value="center">
+            Center
+          </v-btn>
+
+          <v-btn value="right">
+            Right
+          </v-btn>
+
+          <v-btn value="justify">
+            Justify
+          </v-btn>
+        </v-btn-toggle>
+      </v-col>
       <v-spacer />
     </v-app-bar>
     <v-content>
@@ -26,7 +44,7 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-footer :fixed="fixed" app>
+    <v-footer app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -50,6 +68,11 @@ export default {
       ],
       title: "Vuetify.js"
     };
+  },
+  methods: {
+    test() {
+      alert("1");
+    }
   }
 };
 </script>
