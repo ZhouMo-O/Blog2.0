@@ -14,7 +14,9 @@
 import navComponent from "~/components/nav.vue";
 export default {
   data() {
-    return {};
+    return {
+      fixed: true
+    };
   },
   components: {
     navComponent
