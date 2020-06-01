@@ -13,7 +13,7 @@
         <v-hover>
           <template v-slot="{ hover }">
             <v-card
-              :elevation="hover ? 2 : 12"
+              :elevation="hover ? 4 : 18"
               class="mx-auto"
               max-width="380"
               max-height="350"
