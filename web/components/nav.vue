@@ -35,7 +35,6 @@
           <v-btn value="首页">
             首页
           </v-btn>
-
           <v-btn value="博客">
             博客
           </v-btn>
