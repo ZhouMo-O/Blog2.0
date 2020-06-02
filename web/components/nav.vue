@@ -32,10 +32,10 @@
       <v-toolbar-title class="pl-4 mr-4" v-text="title" />
       <v-expand-transition>
         <v-btn-toggle v-if="!isSmallScreen" tile group>
-          <v-btn value="首页">
+          <v-btn to="/" value="首页">
             首页
           </v-btn>
-          <v-btn value="博客">
+          <v-btn to="/article/article" value="博客">
             博客
           </v-btn>
           <v-btn value="归档">

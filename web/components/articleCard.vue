@@ -1,10 +1,15 @@
 <template>
   <v-container id="cardIndex">
     <v-row>
-      <v-col :sm="6" :md="4" :lg="3" :xl="2" v-for="n in 12" :key="n" id="articleCard">
+      <v-col :sm="6" :md="4" :lg="3" v-for="n in 12" :key="n" id="articleCard">
         <v-hover close-delay="50">
           <template v-slot="{ hover }">
-            <v-card :elevation="hover ? 2 :10" class="mx-auto" max-width="350" max-height="380">
+            <v-card
+              :elevation="hover ? 2 : 10"
+              class="mx-auto"
+              max-width="350"
+              max-height="380"
+            >
               <v-img
                 class="white--text align-end"
                 height="200px"
