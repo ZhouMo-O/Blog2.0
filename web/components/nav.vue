@@ -66,13 +66,13 @@ export default {
       items: [
         {
           icon: "mdi-apps",
-          title: "Welcome",
+          title: "首页",
           to: "/"
         },
         {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire"
+          icon: "mdi-book-open-outline",
+          title: "博客",
+          to: "/article/article"
         }
       ],
       title: "Starry"

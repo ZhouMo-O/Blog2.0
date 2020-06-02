@@ -24,36 +24,32 @@
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
         <v-form v-model="valid">
-          <v-container>
-            <v-row>
-              <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="name"
-                  :rules="nameRules"
-                  :counter="10"
-                  label="昵称"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="email"
-                  :rules="emailRules"
-                  label="E-mail(收到回复会以邮件通知你)"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-text-field
-                  v-model="domain"
-                  :counter="10"
-                  label="域名(头像将会指向你的域名)"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-form>
-        <v-container fluid>
+          <v-row>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="model.name"
+                :rules="nameRules"
+                :counter="10"
+                label="昵称"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="model.email"
+                :rules="emailRules"
+                label="E-mail(收到回复会以邮件通知你)"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="4">
+              <v-text-field
+                v-model="model.domain"
+                :counter="10"
+                label="域名(头像将会指向你的域名)"
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-textarea
             name="input-7-1"
             filled
@@ -62,7 +58,9 @@
             :rules="commentContent"
             required
           ></v-textarea>
-        </v-container>
+
+          <v-btn :disabled="!valid" @click="submit" clos="md-12">submit</v-btn>
+        </v-form>
       </v-card>
     </v-container>
   </div>
@@ -72,6 +70,9 @@
 export default {
   data() {
     return {
+      valid: true,
+      model: { name: "", domain: "", email: "" },
+
       nameRules: [
         v => !!v || "您贵姓？",
         v => (v && v.length <= 10) || "超“十”了"
@@ -83,7 +84,13 @@ export default {
       ],
       commentContent: [v => !!v || "多少说一句"]
     };
-  }
+  },
+  methods: {
+    submit() {
+      this.$refs.form.validate();
+    }
+  },
+  components: {}
 };
 </script>
 
@@ -112,7 +119,7 @@ h2 {
 }
 
 .articleMessage {
-  width: 100vw;
+  width: 90vw;
   position: relative;
   top: -105px;
   z-index: 2;
@@ -120,8 +127,5 @@ h2 {
 
 .articleIcon {
   margin-right: 2px;
-}
-
-.divider {
 }
 </style>
