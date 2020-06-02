@@ -1,23 +1,10 @@
 <template>
-  <v-container class="grey lighten-5">
-    <v-row class="mb-6">
-      <v-col
-        :lg="4"
-        :xl="3"
-        :md="6"
-        :sm="6"
-        v-for="n in 12"
-        :key="n"
-        id="articleCard"
-      >
-        <v-hover>
+  <v-container id="cardIndex">
+    <v-row>
+      <v-col :sm="6" :md="4" :lg="3" :xl="2" v-for="n in 12" :key="n" id="articleCard">
+        <v-hover close-delay="50">
           <template v-slot="{ hover }">
-            <v-card
-              :elevation="hover ? 4 : 18"
-              class="mx-auto"
-              max-width="380"
-              max-height="350"
-            >
+            <v-card :elevation="hover ? 2 :10" class="mx-auto" max-width="350" max-height="380">
               <v-img
                 class="white--text align-end"
                 height="200px"
@@ -35,13 +22,9 @@
               </v-card-text>
 
               <v-card-actions>
-                <v-btn color="orange" text>
-                  Share
-                </v-btn>
+                <v-btn color="orange" text>Share</v-btn>
 
-                <v-btn color="orange" text>
-                  Explore
-                </v-btn>
+                <v-btn color="orange" text>Explore</v-btn>
               </v-card-actions>
             </v-card>
           </template>
@@ -59,4 +42,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media screen and (min-width: 1500px) {
+  #cardIndex {
+    max-width: 1450px;
+  }
+}
+</style>
