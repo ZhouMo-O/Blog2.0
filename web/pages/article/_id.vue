@@ -5,14 +5,19 @@
     </v-card>
     <v-container id="articleContainer">
       <div class="articleMessage">
-        <v-chip small>
-          <v-icon class="articleIcon">mdi-eye-outline</v-icon>5000</v-chip
+        <v-chip close-icon="mdi-calendar-month" small color="#F0F0F0">
+          <v-icon class="articleIcon">mdi-calendar-month</v-icon
+          >2020-6-3</v-chip
         >
-        <v-chip small>
+        <v-chip small color="#F0F0F0">
+          <v-icon dense class="articleIcon">mdi-eye-outline</v-icon
+          >50000</v-chip
+        >
+        <v-chip small color="#F0F0F0">
           <v-icon class="articleIcon">mdi-comment-processing-outline</v-icon
           >10</v-chip
         >
-        <v-chip small>
+        <v-chip small color="#F0F0F0">
           <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon>15</v-chip
         >
       </div>
@@ -110,7 +115,7 @@ h2 {
 }
 
 .articleBody {
-  width: 100vw;
+  width: 80vw;
   min-height: 50vh;
   margin: 0 auto;
   padding: 30px;
@@ -119,13 +124,16 @@ h2 {
 }
 
 .articleMessage {
-  width: 90vw;
+  width: 80vw;
+  margin: 0 auto;
   position: relative;
   top: -105px;
   z-index: 2;
+  /* border: 1px solid red; */
 }
 
 .articleIcon {
+  font-size: 25px;
   margin-right: 2px;
 }
 </style>

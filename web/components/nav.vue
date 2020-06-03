@@ -41,6 +41,9 @@
           <v-btn value="归档">
             归档
           </v-btn>
+          <v-btn value="友链">
+            友链
+          </v-btn>
           <v-btn value="留言板">
             留言板
           </v-btn>
@@ -89,6 +92,7 @@ export default {
         this.isSmallScreen = true;
       } else {
         this.isSmallScreen = false;
+        this.drawer = false;
       }
     }
   }
