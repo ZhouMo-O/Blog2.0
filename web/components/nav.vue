@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       absolute: true,
-      isSmallScreen: true,
+      isSmallScreen: false,
       drawer: false,
       fixed: false,
       items: [
@@ -86,15 +86,18 @@ export default {
   },
   methods: {
     ifSmallScreen() {
-      const h =
+      const w =
         document.documentElement.clientWidth || document.body.clientWidth;
-      if (h < 600) {
+      if (w < 600) {
         this.isSmallScreen = true;
       } else {
         this.isSmallScreen = false;
         this.drawer = false;
       }
     }
+  },
+  mounted() {
+    this.ifSmallScreen();
   }
 };
 </script>
