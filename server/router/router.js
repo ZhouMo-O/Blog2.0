@@ -16,11 +16,11 @@ module.exports = (app) => {
 
   router.get("/", async (req, res) => {
     const queryOptions = {};
-    if (req.Model.modelName === "article") {
-      queryOptions.populate = "relatedTag";
-    }
-    console.log(`查询条件`, req.query);
-    const item = await req.Model.find(req.query).setOptions(queryOptions);
+    // if (req.Model.modelName === "article") {
+    //   queryOptions.populate = "relatedTag";
+    // }
+    // console.log(`查询条件`, req.query);
+    const item = await req.Model.find(req.query); //.setOptions(queryOptions);
     console.log(`获取 ${req.params.resource}列表`);
     res.send(item);
   });

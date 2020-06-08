@@ -38,7 +38,6 @@ let uploadFile = async (file) => {
   return await http.post(`upload`, file);
 };
 
-
 export {
   getCodeSrc,
   userLogin,
@@ -49,5 +48,4 @@ export {
   restDeleteOne,
   deleteFile,
   uploadFile,
-
 };

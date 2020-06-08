@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import { restGetAll } from "../../api/api";
+
 export default {
   data() {
     return {
@@ -91,11 +93,19 @@ export default {
     };
   },
   methods: {
+    async getAllArticle() {
+      let article = await restGetAll("article");
+      console.log(article);
+    },
+
     submit() {
       this.$refs.form.validate();
     }
   },
-  components: {}
+  components: {},
+  created() {
+    this.getAllArticle();
+  }
 };
 </script>
 
