@@ -26,13 +26,14 @@
           <span v-for="n in 100" :key="n"
             >这是一段测试内容，循环一百次，模拟字数较多时候的时候的整体观感</span
           >
+          {{ title }}
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
         <v-form v-model="valid">
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="model.name"
+                v-model="comment.name"
                 :rules="nameRules"
                 :counter="10"
                 label="昵称"
@@ -41,7 +42,7 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="model.email"
+                v-model="comment.email"
                 :rules="emailRules"
                 label="E-mail(收到回复会以邮件通知你)"
                 required
@@ -49,7 +50,7 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="model.domain"
+                v-model="comment.domain"
                 :counter="10"
                 label="域名(头像将会指向你的域名)"
               ></v-text-field>
@@ -73,13 +74,15 @@
 
 <script>
 import { restGetAll } from "../../api/api";
+import axios from "axios";
 
 export default {
   data() {
     return {
       valid: true,
-      model: { name: "", domain: "", email: "" },
-
+      title: {},
+      model: {},
+      comment: { name: "", domain: "", email: "" },
       nameRules: [
         v => !!v || "您贵姓？",
         v => (v && v.length <= 10) || "超“十”了"
@@ -92,20 +95,21 @@ export default {
       commentContent: [v => !!v || "多少说一句"]
     };
   },
-  methods: {
-    async getAllArticle() {
-      let article = await restGetAll("article");
-      console.log(article);
-    },
 
+  methods: {
+    async getArticle() {
+      let article = await restGetAll("article");
+      this.model = article.data;
+      console.log(article.data);
+    },
     submit() {
       this.$refs.form.validate();
     }
   },
-  components: {},
-  created() {
-    this.getAllArticle();
-  }
+  mounted() {
+    this.getArticle();
+  },
+  components: {}
 };
 </script>
 

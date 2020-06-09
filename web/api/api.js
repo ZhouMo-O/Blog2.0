@@ -1,7 +1,7 @@
 import http from "../plugins/http";
 
-let restGetAll = async url => {
-  await http.get(`rest/${url}`);
+let restGetAll = async (url, query) => {
+  return await http.get(`rest/${url}`, { params: query });
 };
 
 export { restGetAll };
