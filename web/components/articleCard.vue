@@ -16,7 +16,7 @@
               class="mx-auto"
               max-width="350"
               max-height="380"
-              :to="'/article/article'"
+              :to="`/article/${item._id}`"
             >
               <v-img
                 class="white--text align-end"
