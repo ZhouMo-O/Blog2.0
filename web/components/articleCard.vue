@@ -36,27 +36,28 @@
 
               <v-card-actions class="articleMessage">
                 <!-- time -->
-                <span class="overline">
+                <p class="overline">
                   {{ item.createTime.slice(0, 8) }}
-                </span>
+                </p>
                 <div class="likeAndRead">
                   <!-- read -->
-                  <span class="read overline">
+                  <p class="read overline">
                     <v-icon class="articleIcon">mdi-eye-outline</v-icon>
                     {{ item.read }}
-                  </span>
+                  </p>
+
                   <!-- comment -->
-                  <span class="comment overline">
+                  <p class="comment overline">
                     <v-icon class="articleIcon"
                       >mdi-comment-processing-outline</v-icon
                     >
                     10
-                  </span>
+                  </p>
                   <!-- like -->
-                  <span class="like overline">
+                  <p class="like overline">
                     <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon>
                     {{ item.like }}
-                  </span>
+                  </p>
                 </div>
               </v-card-actions>
             </v-card>
@@ -96,10 +97,13 @@ export default {
   position: absolute;
   right: 10px;
 }
+.likeAndRead p {
+  float: left;
+  margin-left: 4px;
+}
 
 .articleIcon {
   font-size: 20px;
-  margin-right: 2px;
 }
 @media screen and (min-width: 1500px) {
   #cardIndex {
