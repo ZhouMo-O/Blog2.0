@@ -5,7 +5,7 @@
 技术栈：  
 前端：nuxt+vuetify  
 管理端：vue+elementUi  
-服务端：node+mongoose
+服务端：nodeExpress+mongoose
 
 开发日记  
 4/12:按部就班的开发博客发布和博客列表，感觉写重复代码很没意思，得把我这套接口封装一下了，并期待后续的新功能。
