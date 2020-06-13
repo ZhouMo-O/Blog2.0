@@ -1,32 +1,30 @@
 <template>
   <div class="article">
     <v-card color="#F0F0F0" class="articleTopCard">
-      <h2 class=" text-center">一个测试标题稍微长一点</h2>
+      <h2 class=" text-center">{{ model.title }}</h2>
     </v-card>
     <v-container id="articleContainer">
       <div class="articleMessage">
         <v-chip close-icon="mdi-calendar-month" small color="#F0F0F0">
           <v-icon class="articleIcon">mdi-calendar-month</v-icon
-          >2020-6-3</v-chip
+          >{{ model.createTime }}</v-chip
         >
         <v-chip small color="#F0F0F0">
           <v-icon dense class="articleIcon">mdi-eye-outline</v-icon
-          >50000</v-chip
+          >{{ model.read }}</v-chip
         >
         <v-chip small color="#F0F0F0">
           <v-icon class="articleIcon">mdi-comment-processing-outline</v-icon
-          >10</v-chip
+          >{{ model.comment }}</v-chip
         >
         <v-chip small color="#F0F0F0">
-          <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon>15</v-chip
+          <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon
+          >{{ model.like }}</v-chip
         >
       </div>
       <v-card class="articleBody">
         <div class="article">
-          <span v-for="n in 100" :key="n"
-            >这是一段测试内容，循环一百次，模拟字数较多时候的时候的整体观感</span
-          >
-          {{ title }}
+          {{ model.html }}
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
         <v-form v-model="valid">
@@ -73,7 +71,7 @@
 </template>
 
 <script>
-import { restGetAll } from "../../api/api";
+import { restGetAll, restGetOne } from "../../api/api";
 import axios from "axios";
 
 export default {
@@ -82,6 +80,7 @@ export default {
       valid: true,
       title: {},
       model: {},
+      id: "",
       comment: { name: "", domain: "", email: "" },
       nameRules: [
         v => !!v || "您贵姓？",
@@ -98,18 +97,19 @@ export default {
 
   methods: {
     async getArticle() {
-      let article = await restGetAll("article");
+      let article = await restGetOne("article", this.$route.params.id);
       this.model = article.data;
       console.log(article.data);
+      console.log(this.$route.params.id);
     },
     submit() {
       this.$refs.form.validate();
     }
   },
+  components: {},
   mounted() {
     this.getArticle();
-  },
-  components: {}
+  }
 };
 </script>
 

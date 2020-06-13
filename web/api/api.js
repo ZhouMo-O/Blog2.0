@@ -4,4 +4,8 @@ let restGetAll = async (url, query) => {
   return await http.get(`rest/${url}`, { params: query });
 };
 
-export { restGetAll };
+let restGetOne = async (url, params) => {
+  return await http.get(`rest/${url}/${params}`);
+};
+
+export { restGetAll, restGetOne };

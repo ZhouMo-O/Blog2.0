@@ -37,7 +37,7 @@
               <v-card-actions class="articleMessage">
                 <!-- time -->
                 <p class="overline">
-                  {{ item.createTime.slice(0, 8) }}
+                  {{ item.createTime.slice(0, 9) }}
                 </p>
                 <div class="likeAndRead">
                   <!-- read -->
@@ -77,12 +77,15 @@ export default {
   }),
   methods: {
     async getAllarticle() {
-      let article = await restGetAll("article", { privacy: false });
-      this.model = article.data;
-      console.log(article.data);
+      try {
+        let article = await restGetAll("article", { privacy: false });
+        this.model = article.data;
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
-  created() {
+  mounted() {
     this.getAllarticle();
   }
 };

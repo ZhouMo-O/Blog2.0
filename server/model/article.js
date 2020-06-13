@@ -21,7 +21,7 @@ const Schema = new mongoose.Schema({
     default: 0,
   },
   comment: {
-    type: Array,
+    type: Number,
     default: 0,
   },
   privacy: {
@@ -49,4 +49,3 @@ const Schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("article", Schema);
-
