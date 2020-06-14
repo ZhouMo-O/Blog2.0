@@ -24,7 +24,7 @@
       </div>
       <v-card class="articleBody">
         <div class="article">
-          {{ model.html }}
+          <div v-html="model.html" class="markdown-body"></div>
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
         <v-form v-model="valid">
@@ -72,7 +72,7 @@
 
 <script>
 import { restGetAll, restGetOne } from "../../api/api";
-import axios from "axios";
+import md from "../../plugins/mavon-markdown-it";
 
 export default {
   data() {
@@ -99,6 +99,7 @@ export default {
     async getArticle() {
       let article = await restGetOne("article", this.$route.params.id);
       this.model = article.data;
+      this.html = md.render(this.model.markdown);
       console.log(article.data);
       console.log(this.$route.params.id);
     },

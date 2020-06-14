@@ -96,6 +96,7 @@ export default {
     async saveDoc(markdown, html) {
       this.model.markdown = markdown;
       this.model.html = html;
+      console.log(markdown, html);
       if (this.id) {
         let data = await restUpdata(`article`, this.id, this.model);
       } else {
