@@ -26,11 +26,11 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ["assets/main.css"],
+  css: [{ src: "assets/main.css" }],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: "@/plugins/vue-mavon-editor", ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */

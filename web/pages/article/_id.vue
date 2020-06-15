@@ -24,7 +24,18 @@
       </div>
       <v-card class="articleBody">
         <div class="article">
-          <div v-html="model.html" class="markdown-body"></div>
+          <div class="mavonEditor">
+            <no-ssr>
+              <mavon-editor
+                v-model="model.html"
+                :subfield="false"
+                defaultOpen="preview"
+                :toolbarsFlag="false"
+                :boxShadow="false"
+                :ishljs="true"
+              />
+            </no-ssr>
+          </div>
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
         <v-form v-model="valid">
@@ -62,7 +73,6 @@
             :rules="commentContent"
             required
           ></v-textarea>
-
           <v-btn :disabled="!valid" @click="submit" clos="md-12">submit</v-btn>
         </v-form>
       </v-card>
@@ -72,7 +82,6 @@
 
 <script>
 import { restGetAll, restGetOne } from "../../api/api";
-import md from "../../plugins/mavon-markdown-it";
 
 export default {
   data() {
@@ -99,7 +108,7 @@ export default {
     async getArticle() {
       let article = await restGetOne("article", this.$route.params.id);
       this.model = article.data;
-      this.html = md.render(this.model.markdown);
+      console.log();
       console.log(article.data);
       console.log(this.$route.params.id);
     },
@@ -110,6 +119,10 @@ export default {
   components: {},
   mounted() {
     this.getArticle();
+    process.browser &&
+      document
+        .querySelectorAll("pre code")
+        .forEach(block => Prism.highlightElement(block));
   }
 };
 </script>
