@@ -27,6 +27,7 @@
           <div class="mavonEditor">
             <no-ssr>
               <mavon-editor
+                codeStyle="ascetic"
                 v-model="model.html"
                 :subfield="false"
                 defaultOpen="preview"

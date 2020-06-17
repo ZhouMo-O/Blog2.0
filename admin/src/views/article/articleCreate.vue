@@ -12,6 +12,7 @@
       <el-form-item>
         <div id="editor">
           <mavon-editor
+            codeStyle="agate"
             v-model="model.markdown"
             @save="saveDoc"
             style="height: 100%"
