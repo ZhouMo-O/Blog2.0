@@ -77,7 +77,13 @@
           <v-btn :disabled="!valid" @click="submit" clos="md-12">submit</v-btn>
         </v-form>
         <v-divider class="mt-4 mb-4"></v-divider>
-        <v-card :tile="false" class="mx-auto" color="#26c6da" max-width="100%">
+        <v-card
+          v-for="com in commentList"
+          :tile="false"
+          class="mx-auto"
+          color="#26c6da"
+          max-width="100%"
+        >
           <v-card-actions>
             <v-list-item class="grow">
               <v-list-item-avatar color="grey darken-3">
@@ -111,7 +117,12 @@
 </template>
 
 <script>
-import { restGetAll, restGetOne, restUpdata } from "../../api/api";
+import {
+  restGetAll,
+  restGetOne,
+  restUpdata,
+  restPostData
+} from "../../api/api";
 
 export default {
   data() {
@@ -119,8 +130,14 @@ export default {
       valid: true,
       title: {},
       model: {},
+      commentList: [],
       id: "",
-      comment: { name: "", domain: "", email: "" },
+      comment: {
+        name: "",
+        domain: "",
+        email: "",
+        blogId: this.$route.params.id
+      },
       nameRules: [
         v => !!v || "您贵姓？",
         v => (v && v.length <= 10) || "超“十”了"
@@ -146,9 +163,13 @@ export default {
       this.model = article.data;
       this.updateArticleInfo();
     },
-    submit() {
+    async getAllComment() {
+      let commentList = await restGetAll("comment");
+      this.commentList = commentList.data;
+    },
+    async submit() {
       // this.$refs.form.validate();
-      console.log(this.comment);
+      await restPostData("comment", this.comment);
     }
   },
   components: {},
