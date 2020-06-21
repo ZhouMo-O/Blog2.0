@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { restGetAll, restGetOne } from "../../api/api";
+import { restGetAll, restGetOne, restUpdata } from "../../api/api";
 
 export default {
   data() {
@@ -106,12 +106,16 @@ export default {
   },
 
   methods: {
+    //更新阅读量
+    async updateArticleInfo() {
+      let readNum = { read: ++this.model.read };
+      await restUpdata("article", this.$route.params.id, readNum);
+    },
+
     async getArticle() {
       let article = await restGetOne("article", this.$route.params.id);
       this.model = article.data;
-      console.log();
-      console.log(article.data);
-      console.log(this.$route.params.id);
+      this.updateArticleInfo();
     },
     submit() {
       this.$refs.form.validate();
