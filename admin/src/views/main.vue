@@ -31,6 +31,15 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
+              <i class="el-icon-s-order"></i>评论管理
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="/comment/list">评论列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
               <i class="el-icon-s-order"></i>标签管理
             </template>
             <el-menu-item-group>

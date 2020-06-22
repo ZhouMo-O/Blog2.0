@@ -4,6 +4,7 @@ import main from "../views/main.vue";
 import home from "../views/home.vue";
 import articleCreate from "../views/article/articleCreate";
 import articleList from "../views/article/articleList";
+import commentList from "../views/comment/commentList";
 
 import tagCreate from "../views/tag/tagCreate";
 import tagList from "../views/tag/tagList";
@@ -42,6 +43,11 @@ const router = new VueRouter({
           path: "/tag/create",
           name: tagCreate,
           component: tagCreate,
+        },
+        {
+          path: "/comment/list",
+          name: commentList,
+          component: commentList,
         },
         {
           path: "/tag/list",

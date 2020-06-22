@@ -6,13 +6,13 @@ const Schema = new mongoose.Schema({
   content: {
     type: String,
   },
+  name: {
+    type: String,
+  },
   email: {
     type: String,
   },
   site: {
-    type: String,
-  },
-  time: {
     type: String,
   },
   blogId: {
@@ -27,5 +27,17 @@ const Schema = new mongoose.Schema({
       ref: "comment",
     },
   ],
+  createTime: {
+    type: String,
+    default: () => {
+      return new Date().toLocaleString();
+    },
+  },
+  upDateTime: {
+    type: String,
+    default: () => {
+      return new Date().toLocaleString();
+    },
+  },
 });
 module.exports = mongoose.model("comment", Schema);

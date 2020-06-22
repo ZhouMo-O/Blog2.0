@@ -39,6 +39,7 @@
           </div>
         </div>
         <v-divider class="mt-4 mb-4"></v-divider>
+
         <v-form v-model="valid">
           <v-row>
             <v-col cols="12" md="4">
@@ -67,6 +68,7 @@
             </v-col>
           </v-row>
           <v-textarea
+            v-model="comment.content"
             name="input-7-1"
             filled
             label="输入评论"
@@ -77,40 +79,7 @@
           <v-btn :disabled="!valid" @click="submit" clos="md-12">submit</v-btn>
         </v-form>
         <v-divider class="mt-4 mb-4"></v-divider>
-        <v-card
-          v-for="com in commentList"
-          :tile="false"
-          class="mx-auto"
-          color="#26c6da"
-          max-width="100%"
-        >
-          <v-card-actions>
-            <v-list-item class="grow">
-              <v-list-item-avatar color="grey darken-3">
-                <v-img
-                  class="elevation-6"
-                  src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                ></v-img>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <v-list-item-title>Evan You</v-list-item-title>
-              </v-list-item-content>
-
-              <v-row align="center" justify="end">
-                <v-icon class="mr-1">mdi-heart</v-icon>
-                <span class="subheading mr-2">256</span>
-                <span class="mr-1">·</span>
-                <v-icon class="mr-1">mdi-share-variant</v-icon>
-                <span class="subheading">45</span>
-              </v-row>
-            </v-list-item>
-          </v-card-actions>
-          <v-card-text class="text-h3">
-            "Turns out semicolon-less style is easier and safer in TS because
-            most gotcha edge cases are type invalid as well."
-          </v-card-text>
-        </v-card>
+        <comment :blogId="comment.blogId"></comment>
       </v-card>
     </v-container>
   </div>
@@ -124,6 +93,7 @@ import {
   restPostData
 } from "../../api/api";
 
+import comment from "../../components/comment";
 export default {
   data() {
     return {
@@ -136,6 +106,7 @@ export default {
         name: "",
         domain: "",
         email: "",
+        content: "",
         blogId: this.$route.params.id
       },
       nameRules: [
@@ -172,7 +143,7 @@ export default {
       await restPostData("comment", this.comment);
     }
   },
-  components: {},
+  components: { comment },
   mounted() {
     this.getArticle();
     process.browser &&
@@ -191,6 +162,8 @@ export default {
 .articleTopCard {
   width: 100vw;
   height: 45vh;
+  background: #4f7da4;
+  background-size: cover;
 }
 
 h2 {
