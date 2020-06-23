@@ -55,7 +55,7 @@
           </v-list-item-content>
 
           <v-list-item-content>
-            <v-row class="center mr-1" justify="end">
+            <v-row align="center mr-1" justify="end">
               <v-icon class="mr-1">mdi-heart</v-icon>
               <span class="subheading mr-2">256</span>
               <span class="mr-1">·</span>
@@ -106,7 +106,7 @@ export default {
     async submit() {
       await restPostData("comment", this.comment);
       this.getArticleComment();
-      this.comment = true;
+      this.comment.content = " ";
     },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
