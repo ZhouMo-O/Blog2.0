@@ -38,7 +38,7 @@
               <el-menu-item index="/comment/list">评论列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2">
+          <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-s-order"></i>标签管理
             </template>
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       userName: "",
-      title: "暂时么的",
+      title: "Starry",
     };
   },
   methods: {
