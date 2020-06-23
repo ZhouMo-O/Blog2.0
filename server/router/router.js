@@ -20,7 +20,9 @@ module.exports = (app) => {
       queryOptions.populate = "relatedTag";
     }
     console.log(`查询条件`, req.query);
-    const item = await req.Model.find(req.query).setOptions(queryOptions);
+    const item = await req.Model.find(req.query)
+      // .setOptions(queryOptions)
+      .sort({ createTime: "desc" });
     console.log(`获取 ${req.params.resource}列表`);
     res.send(item);
   });
