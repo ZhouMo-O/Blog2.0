@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import { restGetAll, restPostData } from "../api/api";
 export default {
   data() {
@@ -105,8 +106,8 @@ export default {
   methods: {
     async submit() {
       await restPostData("comment", this.comment);
+      this.$store.commit("changeSteta");
       this.getArticleComment();
-      this.comment.content = " ";
     },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
@@ -120,4 +121,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#message {
+  z-index: 999;
+}
+
+#message .v-snack__wrapper {
+  z-index: 999;
+}
+</style>

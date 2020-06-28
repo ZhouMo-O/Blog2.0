@@ -1,5 +1,20 @@
 <template>
   <div class="article">
+    <v-snackbar
+      id="message"
+      v-model="snackbar"
+      :color="'success'"
+      :multi-line="'multi-line'"
+      :timeout="timeout"
+      :top="'top'"
+    >
+      {{ text }}
+      <template>
+        <v-btn dark text @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
     <v-card color="#F0F0F0" class="articleTopCard">
       <h2 class=" text-center">{{ model.title }}</h2>
     </v-card>
@@ -38,6 +53,10 @@
             </no-ssr>
           </div>
         </div>
+        <v-btn block color="primary" dark @click="test">
+          Show Snackbar
+        </v-btn>
+        <like></like>
         <comment :blogId="this.$route.params.id"></comment>
       </v-card>
     </v-container>
@@ -52,10 +71,16 @@ import {
   restPostData
 } from "../../api/api";
 
+import like from "../../components/like";
 import comment from "../../components/comment";
+import snackbar from "../../components/snackbar";
 export default {
   data() {
     return {
+      snackbar: this.$store.state.model,
+      text: "1231231231",
+      timeout: 7000,
+      valid: true,
       title: {},
       model: {},
       commentList: [],
@@ -64,6 +89,13 @@ export default {
   },
 
   methods: {
+    test() {
+      this.$store.commit("changeSteta");
+      console.log(this.$store.state.model);
+      if (this.$store.state.model) {
+        this.snackbar = true;
+      }
+    },
     //更新阅读量
     async updateArticleInfo() {
       let readNum = { read: ++this.model.read };
@@ -76,13 +108,9 @@ export default {
       this.updateArticleInfo();
     }
   },
-  components: { comment },
+  components: { comment, snackbar, like },
   mounted() {
     this.getArticle();
-    process.browser &&
-      document
-        .querySelectorAll("pre code")
-        .forEach(block => Prism.highlightElement(block));
   }
 };
 </script>
@@ -90,6 +118,11 @@ export default {
 <style scoped>
 .articleBody {
   position: relative;
+  z-index: 0;
+}
+
+.mavonEditor {
+  z-index: 0;
 }
 
 .articleTopCard {
@@ -111,6 +144,7 @@ h2 {
   padding: 30px;
   position: relative;
   top: -100px;
+  z-index: 0;
 }
 
 .articleMessage {

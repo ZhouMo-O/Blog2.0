@@ -1,7 +1,7 @@
 <template>
   <div id="like">
     <!-- partial:index.partial.html -->
-    <a @click="like" href="#" v-bind:class="classModel">
+    <a @click="like" class="paw-button">
       <div class="text">
         <svg>
           <use xlink:href="#heart" />
@@ -67,7 +67,11 @@
           fill="var(--paw-shadow-light)"
         />
       </symbol>
-      <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 34" id="paw-clap">
+      <symbol
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 29 34"
+        id="paw-clap"
+      >
         <path
           d="M4.5,34 L4.5,20.5024009 L4.28033009,20.282731 C2.42337534,18.4257762 1.5,16.1173379 1.5,13.313061 C1.5,10.6471662 2.60979812,9.12119381 4.93190172,8.54066791 L5.40134193,8.42330786 L5.48790243,7.94722512 C6.11076052,4.52150561 7.30156981,2.58644052 8.98717082,2.02457351 C10.7449132,1.4386594 12.3127354,1.72371798 13.7814787,2.89871265 L14.2596812,3.28127461 L14.7301383,2.889227 C16.5115081,1.40475216 18.1951255,1.12414927 19.9145898,1.98388143 C21.651916,2.85254456 22.6936777,4.78724477 23.0037221,7.88768883 L23.0577045,8.42751297 L23.5873022,8.54520133 C26.260051,9.13914552 27.5,10.5168667 27.5,12.813061 C27.5,15.28217 26.4070465,17.7803495 24.1855675,20.3191826 L24,20.5312597 L24,34 L4.5,34 Z"
           fill="var(--paw-clap-background)"
@@ -88,9 +92,7 @@
 <script>
 export default {
   data() {
-    return {
-      classModel: "paw-button animation confetti liked"
-    };
+    return {};
   },
   methods: {
     like() {
@@ -146,8 +148,8 @@ export default {
 
 <style scoped>
 #like {
-  border: 1px solid red;
-  margin: 200px 0px 0px 200px;
+  margin: 0 auto;
+  text-align: center;
   padding: 5px;
 }
 .paw-button {
