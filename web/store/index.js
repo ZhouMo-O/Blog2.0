@@ -4,6 +4,6 @@ export const state = () => ({
 
 export const mutations = {
   changeSteta(state) {
-    state.model = true;
+    state.model = !state.model;
   }
 };

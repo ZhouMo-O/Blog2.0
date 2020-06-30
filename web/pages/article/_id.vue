@@ -3,7 +3,7 @@
     <v-snackbar
       id="message"
       v-model="snackbar"
-      :color="'success'"
+      :color="color"
       :multi-line="'multi-line'"
       :timeout="timeout"
       :top="'top'"
@@ -53,11 +53,11 @@
             </no-ssr>
           </div>
         </div>
-        <v-btn block color="primary" dark @click="test">
-          Show Snackbar
-        </v-btn>
-        <like></like>
-        <comment :blogId="this.$route.params.id"></comment>
+        <like @showMessage="showMsg"></like>
+        <comment
+          @showMessage="showMsg"
+          :blogId="this.$route.params.id"
+        ></comment>
       </v-card>
     </v-container>
   </div>
@@ -77,9 +77,10 @@ import snackbar from "../../components/snackbar";
 export default {
   data() {
     return {
-      snackbar: this.$store.state.model,
+      snackbar: false,
       text: "1231231231",
       timeout: 7000,
+      color: "info",
       valid: true,
       title: {},
       model: {},
@@ -89,12 +90,10 @@ export default {
   },
 
   methods: {
-    test() {
-      this.$store.commit("changeSteta");
-      console.log(this.$store.state.model);
-      if (this.$store.state.model) {
-        this.snackbar = true;
-      }
+    showMsg(data) {
+      this.snackbar = true;
+      this.text = data.msg;
+      this.color = data.type;
     },
     //更新阅读量
     async updateArticleInfo() {

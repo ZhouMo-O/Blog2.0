@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       mode: this.$store.state.mode,
-      snackbar: false,
+      snackbar: this.$store.state.model,
       text: "",
       timeout: 6000,
       valid: true

@@ -106,7 +106,7 @@ export default {
   methods: {
     async submit() {
       await restPostData("comment", this.comment);
-      this.$store.commit("changeSteta");
+      this.$emit("showMessage", { msg: "评论成功!", type: "info" });
       this.getArticleComment();
     },
     async getArticleComment() {

@@ -136,9 +136,17 @@ export default {
               elem.querySelectorAll("i").forEach(i => i.remove());
             }, 600);
           }, 260);
+          this.$emit("showMessage", {
+            msg: "点赞成功,感谢你的支持，我会继续加油。",
+            type: "info"
+          });
         } else {
           elem.classList.remove("animation", "liked", "confetti");
           elem.children[1].textContent = parseInt(number) - 1;
+          this.$emit("showMessage", {
+            msg: "嗷，请别取消你的点赞。",
+            type: "info"
+          });
         }
       });
     }
