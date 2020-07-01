@@ -51,4 +51,6 @@ module.exports = (app) => {
   app.use("/api/rest/:resource", resourceMiddleware(), router);
   //图片上传
   require("../plugin/FileProcess")(app);
+  //点赞接口
+  require("../plugin/like")(app);
 };

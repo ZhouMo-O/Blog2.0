@@ -22,6 +22,6 @@ app.use(
 
 require("./router/router")(app); //router
 require("./plugin/db")(app); //db
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`服务启动 端口号:${PORT}`);
 });

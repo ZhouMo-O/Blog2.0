@@ -4,6 +4,7 @@ module.exports = (app) => {
     `mongodb://127.0.0.1:27017/starry`,
     {
       useNewUrlParser: true,
+      useFindAndModify: false,
       useUnifiedTopology: true,
     },
     (err, data) => {
