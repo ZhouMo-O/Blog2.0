@@ -1,5 +1,6 @@
 import http from "../plugins/http";
 
+//restFullApi
 let restGetAll = async (url, query) => {
   return await http.get(`rest/${url}`, { params: query });
 };
@@ -20,4 +21,16 @@ let restDeleteOne = async (url, parmas) => {
   return await http.delete(`rest/${url}/${parmas}`);
 };
 
-export { restGetAll, restGetOne, restUpdata, restPostData, restDeleteOne };
+//点赞
+let like = async articleData => {
+  return await http.post(`like`, articleData);
+};
+
+export {
+  restGetAll,
+  restGetOne,
+  restUpdata,
+  restPostData,
+  restDeleteOne,
+  like
+};

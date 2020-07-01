@@ -53,7 +53,7 @@
             </no-ssr>
           </div>
         </div>
-        <like @showMessage="showMsg"></like>
+        <like @showMessage="showMsg" :blogId="this.$route.params.id"></like>
         <comment
           @showMessage="showMsg"
           :blogId="this.$route.params.id"
@@ -87,6 +87,9 @@ export default {
       commentList: [],
       id: ""
     };
+  },
+  props: {
+    blogId: { type: String }
   },
 
   methods: {

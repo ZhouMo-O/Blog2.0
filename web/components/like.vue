@@ -90,12 +90,20 @@
 </template>
 
 <script>
+import { like, restGetAll } from "../api/api";
 export default {
   data() {
-    return {};
+    return { articleId: this.blogId };
+  },
+  props: {
+    blogId: { type: String }
   },
   methods: {
-    like() {
+    async like() {
+      let articleData = { articleId: this.articleId }; //打包数据
+      let res = await like(articleData);
+      console.log(res);
+
       let confettiAmount = 60,
         confettiColors = [
           "#7d32f5",
@@ -149,7 +157,15 @@ export default {
           });
         }
       });
+    },
+    async alreadLike() {
+      let query = { articleId: this.articleId };
+      const res = await restGetAll("like");
+      console.log(res);
     }
+  },
+  mounted() {
+    this.alreadLike();
   }
 };
 </script>
