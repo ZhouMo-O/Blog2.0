@@ -1,7 +1,7 @@
 <template>
   <div id="like">
     <!-- partial:index.partial.html -->
-    <a @click="like" class="paw-button">
+    <a @click="like" v-bind:class="classModel">
       <div class="text">
         <svg>
           <use xlink:href="#heart" />
@@ -90,10 +90,13 @@
 </template>
 
 <script>
-import { like, restGetAll } from "../api/api";
+import { like, beenLiked } from "../api/api";
 export default {
   data() {
-    return { articleId: this.blogId };
+    return {
+      classModel: "paw-button",
+      articleId: this.blogId
+    };
   },
   props: {
     blogId: { type: String }
@@ -159,10 +162,15 @@ export default {
       });
     },
     async alreadLike() {
-      let query = { articleId: this.articleId };
-      const res = await restGetAll("like");
-      console.log(res);
-    }
+      const res = await beenLiked(this.articleId);
+      const resCode = res.data.code;
+      if (resCode == "200") {
+        this.classModel = "paw-button animation confetti liked";
+      } else if (resCode) {
+        this.classModel = "paw-button";
+      }
+    },
+    async likeSum() {}
   },
   mounted() {
     this.alreadLike();

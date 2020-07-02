@@ -30,14 +30,12 @@ module.exports = (app) => {
   router.get("/:id", async (req, res) => {
     const item = await req.Model.findById(req.params.id); //.populate("relatedTag");
     console.log(`查找 ${req.params.id}`);
-    console.log(item);
     res.send(item);
   });
 
   router.put("/:id", async (req, res) => {
     const item = await req.Model.findByIdAndUpdate(req.params.id, req.body);
     console.log(`查找 ${req.params.id}`);
-    console.log(item);
     res.send(item);
   });
 

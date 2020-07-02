@@ -26,11 +26,23 @@ let like = async articleData => {
   return await http.post(`like`, articleData);
 };
 
+//是否点赞
+let beenLiked = async articleId => {
+  return await http.get(`like/beenLiked/${articleId}`);
+};
+
+//文章点赞数量
+let likeSum = async articleId => {
+  return await http.get(`like/likeSum/${articleId}`);
+};
+
 export {
   restGetAll,
   restGetOne,
   restUpdata,
   restPostData,
   restDeleteOne,
-  like
+  like,
+  beenLiked,
+  likeSum
 };
