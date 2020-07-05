@@ -75,7 +75,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { restGetAll, restPostData } from "../api/api";
+import { restGetAll, restPostData, restUpdata } from "../api/api";
 export default {
   data() {
     return {
@@ -107,6 +107,7 @@ export default {
     async submit() {
       await restPostData("comment", this.comment);
       this.$emit("showMessage", { msg: "评论成功!", type: "info" });
+      // await restUpdata("article",{})
       this.getArticleComment();
     },
     async getArticleComment() {

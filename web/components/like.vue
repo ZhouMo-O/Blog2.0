@@ -8,7 +8,7 @@
         </svg>
         <span>Like</span>
       </div>
-      <span>14</span>
+      <span>{{ articleInfo.like }}</span>
       <div class="paws">
         <svg class="paw">
           <use xlink:href="#paw" />
@@ -90,12 +90,13 @@
 </template>
 
 <script>
-import { like, beenLiked } from "../api/api";
+import { like, beenLiked, restGetOne } from "../api/api";
 export default {
   data() {
     return {
       classModel: "paw-button",
-      articleId: this.blogId
+      articleId: this.blogId,
+      articleInfo: {}
     };
   },
   props: {
@@ -170,10 +171,15 @@ export default {
         this.classModel = "paw-button";
       }
     },
-    async likeSum() {}
+    async getArticleInfo() {
+      let articleInfo = await restGetOne("article", this.articleId);
+      this.articleInfo = articleInfo.data;
+      console.log(this.articleInfo);
+    }
   },
   mounted() {
     this.alreadLike();
+    this.getArticleInfo();
   }
 };
 </script>
