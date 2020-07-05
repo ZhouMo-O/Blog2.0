@@ -1,23 +1,32 @@
 module.exports = (app) => {
-  let db = require("../model/like");
+  let commentDb = require("../model/like");
+  let articleDb = require("../model/Article");
+
   //点赞接口
   app.post("/api/like", async (req, res) => {
     const userIp = req.ip;
     const articleId = req.body.articleId;
-    const userLike = await db.findOne({ articleId: articleId });
+    const userLike = await commentDb.findOne({ articleId: articleId });
     if (userLike && userLike.userIp == userIp) {
       try {
-        await db.findOneAndRemove(articleId);
-        console.log("取消点赞");
+        await commentDb.findOneAndRemove(articleId);
+        await articleDb.findByIdAndUpdate(
+          { _id: articleId },
+          { $inc: { like: -1 } }
+        );
+        console.log(articleId, "取消点赞");
         res.status(200).send({ msg: "取消点赞" });
       } catch (error) {
         console.log("删除数据失败！", error);
       }
     } else {
       try {
-        await db.create({ articleId: articleId, userIp: userIp });
-        console.log("点赞成功");
-        console.log(data);
+        await commentDb.create({ articleId, userIp });
+        await articleDb.findByIdAndUpdate(
+          { _id: articleId },
+          { $inc: { like: 1 } }
+        );
+        console.log(articleId, " 点赞成功");
         res.status(200).send({ msg: "点赞成功" });
       } catch (error) {
         console.log("创建数据失败", error);
@@ -27,7 +36,7 @@ module.exports = (app) => {
 
   //判断用户是否点过赞 主要用于在页面加载的时候的时候，来改变界面的css
   app.get("/api/like/beenLiked/:id", async (req, res) => {
-    const articleId = await db.findOne({ articleId: req.params.id });
+    const articleId = await commentDb.findOne({ articleId: req.params.id });
     const userIp = req.ip;
     if (articleId && articleId.userIp == userIp) {
       res.status(200).send({ code: "200", msg: "已经点赞" });
@@ -38,7 +47,9 @@ module.exports = (app) => {
 
   //点赞数量
   app.get("api/like/likeSum/:id", async (req, res) => {
-    const articleSum = await db.findOne({ articleId: req.params.id }).count();
+    const articleSum = await commentDb
+      .findOne({ articleId: req.params.id })
+      .count();
     res.send({ msg: "点赞数量", articleSum: articleSum });
   });
 };

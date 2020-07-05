@@ -1,4 +1,4 @@
-class restApiDbProcess {
+class restFullApi {
   constructor(model) {
     this.db = db;
   }

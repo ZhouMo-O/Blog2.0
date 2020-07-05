@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = new mongoose.Schema({
   articleId: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: String,
     required: true,
   },
   userIp: {
@@ -10,4 +10,4 @@ const Schema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("like", Schema);
+module.exports = mongoose.model("Like", Schema);
