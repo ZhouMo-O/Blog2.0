@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  let commentDb = require("../model/like");
+  let commentDb = require("../model/Like");
   let articleDb = require("../model/Article");
 
   //点赞接口
