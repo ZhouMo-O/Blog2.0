@@ -12,14 +12,14 @@ console.log(process.env.REGION);
 app.use(
   require("cors")({
     origin: [
-      `http://localhost:8080`,
+      `http://127.0.0.1:5555`,
       `http://192.168.2.100:8080`,
-      "http://localhost:3000",
+      `http://127.0.0.1:3000`,
     ],
     credentials: true,
   })
 );
-
+app.use("/", express.static(__dirname + "/dist")); //静态文件托管
 require("./router/router")(app); //router
 require("./plugin/db")(app); //db
 app.listen(PORT, "0.0.0.0", () => {

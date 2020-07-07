@@ -1,5 +1,5 @@
 const colors = require("vuetify/es5/util/colors").default;
-
+require("@nuxtjs/dotenv").config;
 module.exports = {
   mode: "universal",
   /*
@@ -38,7 +38,7 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: [],
+  modules: [["@nuxtjs/dotenv"]],
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
