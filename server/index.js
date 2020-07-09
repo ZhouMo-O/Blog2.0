@@ -12,7 +12,7 @@ console.log(process.env.REGION);
 app.use(
   require("cors")({
     origin: [
-      `http://127.0.0.1:5555`,
+      `http://localhost:3000`,
       `http://192.168.2.100:8080`,
       `http://127.0.0.1:3000`,
       `http://47.101.217.184:3000`,

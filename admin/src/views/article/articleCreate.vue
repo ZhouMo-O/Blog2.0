@@ -99,12 +99,16 @@ export default {
       this.model.html = html;
       console.log(markdown, html);
       if (this.id) {
+        this.model.upDateTime = new Date().toLocaleString(); //输入更新时间
         let data = await restUpdata(`article`, this.id, this.model);
       } else {
         let data = await restPostData("article", this.model);
       }
-
-      console.log(data);
+      this.$notify({
+        title: "成功",
+        type: "success",
+        message: "保存成功",
+      });
     },
     async save(formName) {
       let res;
@@ -114,12 +118,12 @@ export default {
       } else {
         res = await restPostData("article", this.model);
       }
-      this.$router.push("/article/list");
       this.$notify({
         title: "成功",
         type: "success",
         message: "保存成功",
       });
+      this.$router.push("/article/list");
       console.log(this.model);
     },
   },

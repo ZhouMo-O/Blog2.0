@@ -35,7 +35,7 @@ module.exports = (app) => {
 
   router.put("/:id", async (req, res) => {
     const item = await req.Model.findByIdAndUpdate(req.params.id, req.body);
-    console.log(`查找 ${req.params.id}`);
+    console.log(`更新 ${req.params.id}`);
     res.send(item);
   });
 

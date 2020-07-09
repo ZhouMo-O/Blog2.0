@@ -6,8 +6,10 @@ module.exports = (app) => {
   app.post("/api/like", async (req, res) => {
     const userIp = req.ip;
     const articleId = req.body.articleId;
-    const userLike = await commentDb.findOne({ articleId: articleId });
-    if (userLike && userLike.userIp == userIp) {
+    const userLike = await commentDb.findOne({
+      userIp: userIp,
+    });
+    if (userLike && userLike.articleId == articleId) {
       try {
         await commentDb.findOneAndRemove(articleId);
         await articleDb.findByIdAndUpdate(
