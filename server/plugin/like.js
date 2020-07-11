@@ -1,7 +1,7 @@
 module.exports = (app) => {
   let commentDb = require("../model/Like");
   let articleDb = require("../model/Article");
-
+  let sendmail = require("../plugin/sendEmail");
   //点赞接口
   app.post("/api/like", async (req, res) => {
     const userIp = req.ip;
@@ -9,6 +9,7 @@ module.exports = (app) => {
     const userLike = await commentDb.findOne({
       userIp: userIp,
     });
+
     if (userLike && userLike.articleId == articleId) {
       try {
         await commentDb.findOneAndRemove(articleId);
@@ -28,6 +29,7 @@ module.exports = (app) => {
           { _id: articleId },
           { $inc: { like: 1 } }
         );
+        sendmail("wujiancheng@infosafe.net.cn", "收到一条新的点赞消息！");
         console.log(articleId, " 点赞成功");
         res.status(200).send({ msg: "点赞成功" });
       } catch (error) {
