@@ -14,9 +14,9 @@
 
       <v-card-text class="white--text pt-0">
         <v-row>
-          <v-col> 热门文章</v-col>
-          <v-col>标签云</v-col>
-          <v-col>友情链接</v-col>
+          <v-col :xs="12" :sm="12" :md="4"> 热门文章</v-col>
+          <v-col :xs="12" :sm="12" :md="4"><tagCloud /></v-col>
+          <v-col :xs="12" :sm="12" :md="4">友情链接</v-col>
         </v-row>
       </v-card-text>
 
@@ -30,10 +30,14 @@
 </template>
 
 <script>
+import tagCloud from "./tagCloud";
 export default {
   data: () => ({
     icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
-  })
+  }),
+  components: {
+    tagCloud
+  }
 };
 </script>
 

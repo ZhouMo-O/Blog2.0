@@ -1,0 +1,11 @@
+<template>
+  <v-card class="indigo"
+    >tagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloudtagCloud</v-card
+  >
+</template>
+
+<script>
+export default {};
+</script>
+
+<style></style>
