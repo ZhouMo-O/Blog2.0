@@ -1,18 +1,16 @@
 <template>
   <v-app dark>
     <navComponent />
-
     <v-content>
       <nuxt />
     </v-content>
 
-    <v-footer :fixed="fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    <footerComponent />
   </v-app>
 </template>
 
 <script>
+import footerComponent from "../components/footer.vue";
 import navComponent from "~/components/nav.vue";
 export default {
   data() {
@@ -21,7 +19,8 @@ export default {
     };
   },
   components: {
-    navComponent
+    navComponent,
+    footerComponent
   },
   methods: {}
 };
