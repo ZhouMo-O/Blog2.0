@@ -75,8 +75,14 @@ export default {
     overlay: false,
     model: []
   }),
+  props: {
+    articleId: { type: String }
+  },
+
   methods: {
     async getAllarticle() {
+      
+      co
       try {
         let article = await restGetAll("article", { privacy: false });
         this.model = article.data;
