@@ -81,8 +81,7 @@ export default {
 
   methods: {
     async getAllarticle() {
-      
-      co
+      console.log()
       try {
         let article = await restGetAll("article", { privacy: false });
         this.model = article.data;
