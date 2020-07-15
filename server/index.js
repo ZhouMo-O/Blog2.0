@@ -16,6 +16,8 @@ app.use(
       `http://192.168.2.100:8080`,
       `http://127.0.0.1:3000`,
       `http://127.0.0.1:5555`,
+      `http://www.blog5.net.cn`,
+      `http://blog5.net.cn`,
       `http://47.101.217.184:3000`,
     ],
     credentials: true,
