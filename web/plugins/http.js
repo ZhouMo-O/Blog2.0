@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: process.env.BASE_URL || "/api",
+  baseURL: process.env.BASE_URL || "admins/blog5.net.cn/api",
   withCredentials: true
 });
 //顺序很重要必须要先在请求头中加上token
