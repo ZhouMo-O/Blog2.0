@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const bodyParser = require("body-parser"); //用于req.body获取值的
 const dotenv = require("dotenv");
 const app = express();
@@ -8,7 +9,18 @@ const PORT = 5555;
 
 //-------------------------中间件--------------------------------
 dotenv.config("./env");
-console.log(process.env.REGION);
+app.use(
+  session({
+    key: "key",
+    secret: "keyboard cat",
+    resave: false,
+    httpOnly: false,
+    saveUninitialized: true,
+    signed: true,
+    overwrite: true,
+  })
+);
+
 app.use(
   require("cors")({
     origin: [
