@@ -51,4 +51,6 @@ module.exports = (app) => {
   require("../plugin/FileProcess")(app);
   //点赞接口
   require("../plugin/like")(app);
+  //svg验证码
+  require("../plugin/svgCaptcha")(app);
 };
