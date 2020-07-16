@@ -1,7 +1,7 @@
 // 用户的find，delete 使用通用restfullApi操作。
 // 此类只做user的 register 和 login 操作。
 // user的password的hash混淆是在userSchem表里操作，具体请查看user的schema表。
-const userModel = require("../plugin/user");
+const userModel = require("../model/User");
 
 class User {
   constructor(userName, passWord, svgCode) {
@@ -14,15 +14,18 @@ class User {
 
   //用户注册
   async register() {
-    let user = await this.userModel.findOne(this.userName);
+    let user = await this.userModel.findOne({ userName: this.userName });
     if (user) {
       return { code: 0, message: "已存在相同的用户名!" };
     }
 
-    if (user.passWord < 6) {
+    if (this.passWord < 6) {
       return { code: 0, message: "密码不可以小于6位" };
     }
-    let createUser = await this.userModel.create(this.userName, this.passWord);
+    let createUser = await this.userModel.create({
+      userName: this.userName,
+      passWord: this.passWord,
+    });
     return { code: 1, data: createUser };
   }
 
