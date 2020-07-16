@@ -6,7 +6,7 @@
       label-width="80px"
       @submit.native.prevent="save('model')"
     >
-      <el-form-item label="博客名称">
+      <el-form-item label="标签名称">
         <el-input v-model="model.tagName"></el-input>
       </el-form-item>
       <el-form-item style="margin-top: 1rem;">
