@@ -9,10 +9,23 @@ import commentList from "../views/comment/commentList";
 import tagCreate from "../views/tag/tagCreate";
 import tagList from "../views/tag/tagList";
 
+import userCreate from "../views/user/userCreate";
+import userList from "../views/user/userList";
+
+import login from "../views/user/login";
+import { Message } from "element-ui";
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes: [
+    {
+      path: "/login",
+      name: "login",
+      meta: {
+        isPublic: true,
+      },
+      component: login,
+    },
     {
       path: "/",
       name: "main",
@@ -40,14 +53,14 @@ const router = new VueRouter({
           component: articleCreate,
         },
         {
-          path: "/tag/create",
-          name: tagCreate,
-          component: tagCreate,
-        },
-        {
           path: "/comment/list",
           name: commentList,
           component: commentList,
+        },
+        {
+          path: "/tag/create",
+          name: tagCreate,
+          component: tagCreate,
         },
         {
           path: "/tag/list",
@@ -60,9 +73,36 @@ const router = new VueRouter({
           name: tagCreate,
           component: tagCreate,
         },
+        {
+          path: "/user/create",
+          name: userCreate,
+          component: userCreate,
+        },
+        {
+          path: "/user/list",
+          name: userList,
+          component: userList,
+        },
+        {
+          path: "/user/edit/:id",
+          props: true,
+          name: userCreate,
+          component: userCreate,
+        },
       ],
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.isPublic && !localStorage.token) {
+    Message({
+      type: "error",
+      message: "请先登录",
+    });
+    next("/login");
+  }
+  next();
 });
 
 export default router;

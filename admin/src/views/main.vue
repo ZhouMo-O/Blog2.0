@@ -48,6 +48,16 @@
               <el-menu-item index="/tag/list">标签列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-s-order"></i>用户管理
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="/user/create">添加用户</el-menu-item>
+              <el-menu-item index="/user/list">用户列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
 
