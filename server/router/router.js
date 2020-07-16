@@ -53,4 +53,6 @@ module.exports = (app) => {
   require("../plugin/like")(app);
   //svg验证码
   require("../plugin/svgCaptcha")(app);
+  //user
+  require("../plugin/user")(app);
 };

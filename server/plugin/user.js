@@ -11,4 +11,16 @@ module.exports = (app) => {
     }
     res.status(200).send(userRes.token);
   });
+
+  app.post("/api/user/register", async (req, res) => {
+    const { userName, passWord } = req.body;
+    const user = new userDbProceesor(userName, passWord);
+    let userRes = user.register();
+
+    if (userRes.code == 0) {
+      res.status(400).send(userRes.message);
+    }
+
+    res.status(200).send(userRes.data);
+  });
 };
