@@ -3,9 +3,13 @@ import http from "../http/http";
 let getCodeSrc = async () => {
   return await http.get("/svgCaptcha");
 };
-//登录
+//用户登录
 let userLogin = async (parmas) => {
   return await http.post("/user/login", parmas);
+};
+
+let userRegister = async (data) => {
+  return await http.post("/user/register", data);
 };
 
 //restFullApi  url：路由路径 parimas：路由参数 data：需要传递的数据,query:查询参数
@@ -41,6 +45,7 @@ let uploadFile = async (file) => {
 export {
   getCodeSrc,
   userLogin,
+  userRegister,
   restgetOne,
   restUpdata,
   restPostData,
