@@ -39,7 +39,14 @@ class User {
       return { code: 0, message: "验证码不能为空" };
     }
 
-    if (this.svgCode != this.sessionCaptcha) {
+    if (!this.sessionCaptcha) {
+      return { code: 0, message: "验证码已失效，请刷新页面" };
+    }
+
+    if (
+      this.svgCode.toLocaleLowerCase() !=
+      this.sessionCaptcha.toLocaleLowerCase()
+    ) {
       return { code: 0, message: "验证码错误" };
     }
 

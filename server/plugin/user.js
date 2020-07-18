@@ -13,7 +13,7 @@ module.exports = (app) => {
     let userRes = await user.login();
     console.log(userRes);
     if (userRes.code == 0) {
-      res.status(400).send(userRes.message);
+      res.status(400).send({ message: userRes.message });
     }
     res.status(200).send(userRes.token);
   });
@@ -24,7 +24,7 @@ module.exports = (app) => {
     let userRes = user.register();
 
     if (userRes.code == 0) {
-      res.status(400).send(userRes.message);
+      res.status(400).send({ message: userRes.message });
     }
 
     res.status(200).send(userRes.data);
