@@ -4,12 +4,16 @@
 const userModel = require("../model/User");
 
 class User {
-  constructor(userName, passWord, svgCode) {
+  constructor(userName, passWord, svgCode, sessionCaptcha) {
     //本该把userModel作为参数传进来的，但是没有类型提示，TS还是要上的。
     this.userModel = userModel;
     this.userName = userName;
     this.passWord = passWord;
     this.svgCode = svgCode;
+    this.sessionCaptcha = sessionCaptcha;
+    console.log(
+      `userName ${this.userName} passWord ${this.passWord} clientSvgCode ${this.svgCode} sessionSvgCode ${this.sessionCaptcha}`
+    );
   }
 
   //用户注册
@@ -31,7 +35,17 @@ class User {
 
   //用户登陆
   async login() {
-    let user = await this.userModel.findOne(this.userName).select("+passWord");
+    if (!this.svgCode) {
+      return { code: 0, message: "验证码不能为空" };
+    }
+
+    if (this.svgCode != this.sessionCaptcha) {
+      return { code: 0, message: "验证码错误" };
+    }
+
+    let user = await this.userModel
+      .findOne({ userName: this.userName })
+      .select("+passWord");
     if (!user) {
       return { code: 0, message: "用户不存在!" };
     }
