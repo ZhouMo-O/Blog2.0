@@ -1,4 +1,4 @@
-module.exports = (app) => {
+module.exports = (app, auth) => {
   const multer = require("multer");
   const MAO = require("multer-aliyun-oss");
 
@@ -13,7 +13,7 @@ module.exports = (app) => {
     }),
   });
 
-  app.post("/api/upload", upload.single("file"), async (req, res) => {
+  app.post("/api/upload", auth, upload.single("file"), async (req, res) => {
     const file = req.file;
     res.send(file);
   });

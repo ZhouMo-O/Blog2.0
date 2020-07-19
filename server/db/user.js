@@ -4,13 +4,14 @@
 const userModel = require("../model/User");
 
 class User {
-  constructor(userName, passWord, svgCode, sessionCaptcha) {
+  constructor(userName, passWord, svgCode, sessionCaptcha, token) {
     //本该把userModel作为参数传进来的，但是没有类型提示，TS还是要上的。
     this.userModel = userModel;
     this.userName = userName;
     this.passWord = passWord;
     this.svgCode = svgCode;
     this.sessionCaptcha = sessionCaptcha;
+    this.token = token;
     console.log(
       `userName ${this.userName} passWord ${this.passWord} clientSvgCode ${this.svgCode} sessionSvgCode ${this.sessionCaptcha}`
     );
@@ -65,9 +66,9 @@ class User {
     const jwt = require("jsonwebtoken");
     const token = jwt.sign(
       {
-        id: user._id,
+        _id: user._id,
       },
-      "procee.env.token"
+      this.token
     );
 
     return { code: 1, token: token };

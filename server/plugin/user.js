@@ -1,13 +1,14 @@
-module.exports = (app) => {
+module.exports = (app, auth) => {
   const userDbProceesor = require("../db/user");
-
+  
   app.post("/api/user/login", async (req, res) => {
     const { userName, passWord, code } = req.body;
     const user = new userDbProceesor(
       userName,
       passWord,
       code,
-      req.session.captcha
+      req.session.captcha,
+      process.env.token
     ); //返回一个对象{code：code，message:"errorMessage"/data:data}
 
     let userRes = await user.login();
@@ -18,7 +19,7 @@ module.exports = (app) => {
     res.status(200).send(userRes.token);
   });
 
-  app.post("/api/user/register", async (req, res) => {
+  app.post("/api/user/register", auth, async (req, res) => {
     const { userName, passWord } = req.body;
     const user = new userDbProceesor(userName, passWord);
     let userRes = user.register();

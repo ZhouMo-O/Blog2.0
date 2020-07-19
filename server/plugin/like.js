@@ -8,11 +8,15 @@ module.exports = (app) => {
     const articleId = req.body.articleId;
     const userLike = await commentDb.findOne({
       userIp: userIp,
+      articleId: articleId,
     });
 
-    if (userLike && userLike.articleId == articleId) {
+    if (userLike) {
       try {
-        await commentDb.findOneAndRemove(articleId);
+        await commentDb.findOneAndRemove({
+          articleId: articleId,
+          userIp: userIp,
+        });
         await articleDb.findByIdAndUpdate(
           { _id: articleId },
           { $inc: { like: -1 } }
@@ -29,7 +33,7 @@ module.exports = (app) => {
           { _id: articleId },
           { $inc: { like: 1 } }
         );
-        sendmail("wujiancheng@infosafe.net.cn", "收到一条新的点赞消息！");
+        // sendmail("wujiancheng@infosafe.net.cn", "收到一条新的点赞消息！");
         console.log(articleId, " 点赞成功");
         res.status(200).send({ msg: "点赞成功" });
       } catch (error) {

@@ -7,8 +7,9 @@ module.exports = (app) => {
   });
 
   const resourceMiddleware = require("../midware/resource");
+  const authMiddleware = require("../midware/auth");
 
-  router.post("/", async (req, res) => {
+  router.post("/", authMiddleware(), async (req, res) => {
     const model = await req.Model.create(req.body);
     console.log(`创建数据`, req.body);
     res.send(model);
@@ -19,7 +20,11 @@ module.exports = (app) => {
     if (req.Model.modelName === "article") {
       queryOptions.populate = "relatedTag";
     }
-    console.log(`查询条件`, req.query);
+
+    if (req.query !== "") {
+      console.log(`查询条件`, req.query);
+    }
+
     const item = await req.Model.find(req.query)
       // .setOptions(queryOptions)
       .sort({ createTime: "desc" });
@@ -39,7 +44,7 @@ module.exports = (app) => {
     res.send(item);
   });
 
-  router.delete("/:id", async (req, res) => {
+  router.delete("/:id", authMiddleware(), async (req, res) => {
     console.log(req.params.id);
     const data = await req.Model.findByIdAndDelete(req.params.id);
     console.log(`删除 ${req.params.resource} 中的 ${data}`);
@@ -48,11 +53,11 @@ module.exports = (app) => {
 
   app.use("/api/rest/:resource", resourceMiddleware(), router);
   //图片上传
-  require("../plugin/FileProcess")(app);
+  require("../plugin/FileProcess")(app, authMiddleware());
   //点赞接口
   require("../plugin/like")(app);
   //svg验证码
   require("../plugin/svgCaptcha")(app);
   //user
-  require("../plugin/user")(app);
+  require("../plugin/user")(app, authMiddleware());
 };
