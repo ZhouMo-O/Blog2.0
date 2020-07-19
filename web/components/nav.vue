@@ -35,9 +35,6 @@
           <v-btn to="/" value="首页">
             首页
           </v-btn>
-          <v-btn to="/article/article" value="博客">
-            博客
-          </v-btn>
           <v-btn value="归档">
             归档
           </v-btn>
