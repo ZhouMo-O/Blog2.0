@@ -1,6 +1,7 @@
 <template>
   <div>
-    <v-card>tagName</v-card> <articleCard :articleId="this.$router.params.id" />
+    <v-card>tagName</v-card>
+    <articleCard :articleId="this.$route.params.id" />
   </div>
 </template>
 

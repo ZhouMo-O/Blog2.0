@@ -81,17 +81,26 @@ export default {
 
   methods: {
     async getAllarticle() {
-      console.log()
       try {
         let article = await restGetAll("article", { privacy: false });
         this.model = article.data;
       } catch (err) {
         console.log(err);
       }
+    },
+
+    async getRelatedTagArticle() {
+      try {
+        let query = { privacy: false, relatedTag: this.articleId };
+        let article = await restGetAll("article", query);
+        this.model = article.data;
+      } catch (error) {
+        console.log(err);
+      }
     }
   },
   mounted() {
-    this.getAllarticle();
+    this.articleId ? this.getRelatedTagArticle() : this.getAllarticle();
   }
 };
 </script>
