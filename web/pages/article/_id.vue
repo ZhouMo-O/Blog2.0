@@ -16,7 +16,7 @@
       </template>
     </v-snackbar>
     <v-card color="#F0F0F0" class="articleTopCard">
-      <h2 class=" text-center">{{ model.title }}</h2>
+      <h2 class="text-center">{{ model.title }}</h2>
     </v-card>
     <v-container id="articleContainer">
       <div class="articleMessage">
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      text: "1231231231",
+      text: "",
       timeout: 7000,
       color: "info",
       valid: true,

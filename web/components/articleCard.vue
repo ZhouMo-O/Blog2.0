@@ -69,10 +69,11 @@
 </template>
 
 <script>
-import { restGetAll } from "../api/api";
+import { restGetAll, restGetOne } from "../api/api";
 export default {
   data: () => ({
     overlay: false,
+    tagData: {},
     model: []
   }),
   props: {
@@ -88,9 +89,9 @@ export default {
         console.log(err);
       }
     },
-
     async getRelatedTagArticle() {
       try {
+        console.log(this.articleId);
         let query = { privacy: false, relatedTag: this.articleId };
         let article = await restGetAll("article", query);
         this.model = article.data;

@@ -1,20 +1,26 @@
 <template>
   <div>
-    <v-card>tagName</v-card>
-    <articleCard :articleId="this.$route.params.id" />
+    <v-card color="white" height="300px">
+      <h1 class="pt-12 text-center">{{ tagData.tagName }}</h1></v-card
+    >
+    <articleCard :articleId="this.tagId" />
   </div>
 </template>
 
 <script>
-import { restGetAll } from "../../api/api";
+import { restGetAll, restGetOne } from "../../api/api";
 import articleCard from "../../components/articleCard";
 export default {
   data() {
-    return {};
+    return { tagData: {}, tagId: this.$route.params.id };
   },
   methods: {
+    async getTagName() {
+      let res = await restGetOne("tag", this.tagId);
+      this.tagData = res.data;
+    },
     async getAllRelatedTagArticle() {
-      let query = { relatedTag: this.$route.params.id };
+      let query = { relatedTag: this.tagId };
       let res = await restGetAll("article", query);
       console.log(res);
     }
@@ -24,8 +30,9 @@ export default {
   },
   mounted() {
     this.getAllRelatedTagArticle();
+    this.getTagName();
   }
 };
 </script>
 
-<style></style>
+<style scoped></style>
