@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark padless>
+  <v-footer padless>
     <v-card
       width="100vw"
       flat
@@ -14,16 +14,24 @@
 
       <v-card-text class="white--text pt-0">
         <v-row>
-          <v-col :xs="12" :sm="12" :md="4"> 热门文章</v-col>
-          <v-col :xs="12" :sm="12" :md="4"><tagCloud /></v-col>
-          <v-col :xs="12" :sm="12" :md="4">友情链接</v-col>
+          <v-col :xs="12" :sm="12" :md="4">
+            <v-card min-width="300" min-height="40">热门文章----</v-card></v-col
+          >
+          <v-col :xs="12" :sm="12" :md="4">
+            <v-card min-width="300" min-height="40"><tagCloud /></v-card
+          ></v-col>
+          <v-col :xs="12" :sm="12" :md="4">
+            <v-card min-width="300" min-height="40"
+              >友情链接-----</v-card
+            ></v-col
+          >
         </v-row>
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong><br />
+        {{ new Date().getFullYear() }} — <strong>Starry</strong><br />
         <strong>
           <a href="http://www.miitbeian.gov.cn/">渝ICP备2008467</a>
         </strong>
