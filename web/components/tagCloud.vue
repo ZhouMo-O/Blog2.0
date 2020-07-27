@@ -1,7 +1,8 @@
 <template>
-  <v-card class="indigo  white--text text-center">
-    <v-chip-group dark column active-class="primary--text">
+  <v-card class="pl-2 indigo  white--text text-center">
+    <v-chip-group>
       <v-chip
+        label
         :to="`/tagCloud/${tag._id}`"
         color="#30B8E3"
         v-for="tag in tags"
