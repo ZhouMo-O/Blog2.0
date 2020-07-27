@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-card color="white" height="300px">
-      <h1 class="tagName text-center">{{ tagData.tagName }}</h1>
-    </v-card>
+    <v-card color="white" height="280px;">
+      <h1 class="tagName text-center">{{ tagData.tagName }}</h1></v-card
+    >
     <articleCard :articleId="this.tagId" />
   </div>
 </template>
@@ -37,6 +37,6 @@ export default {
 
 <style scoped>
 .tagName {
-  padding-top: 100px;
+  padding: 100px;
 }
 </style>
