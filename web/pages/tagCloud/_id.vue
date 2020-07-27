@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-card color="white" height="300px">
-      <h1 class="pt-12 text-center">{{ tagData.tagName }}</h1></v-card
-    >
+      <h1 class="tagName text-center">{{ tagData.tagName }}</h1>
+    </v-card>
     <articleCard :articleId="this.tagId" />
   </div>
 </template>
@@ -23,16 +23,20 @@ export default {
       let query = { relatedTag: this.tagId };
       let res = await restGetAll("article", query);
       console.log(res);
-    }
+    },
   },
   components: {
-    articleCard
+    articleCard,
   },
   mounted() {
     this.getAllRelatedTagArticle();
     this.getTagName();
-  }
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.tagName {
+  padding-top: 100px;
+}
+</style>
