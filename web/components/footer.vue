@@ -15,16 +15,13 @@
       <v-card-text class="white--text pt-0">
         <v-row>
           <v-col :xs="12" :sm="12" :md="4">
-            <v-card min-width="300" min-height="40">热门文章----</v-card></v-col
-          >
-          <v-col :xs="12" :sm="12" :md="4">
-            <v-card min-width="300" min-height="40"><tagCloud /></v-card
+            <v-card
+              flat
+              min-width="300"
+              min-height="40"
+              class="indigo lighten-1 white--text text-center"
+              ><tagCloud /></v-card
           ></v-col>
-          <v-col :xs="12" :sm="12" :md="4">
-            <v-card min-width="300" min-height="40"
-              >友情链接-----</v-card
-            ></v-col
-          >
         </v-row>
       </v-card-text>
 
