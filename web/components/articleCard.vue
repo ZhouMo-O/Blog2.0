@@ -79,7 +79,6 @@ export default {
   props: {
     articleId: { type: String }
   },
-
   methods: {
     async getAllarticle() {
       try {

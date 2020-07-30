@@ -38,7 +38,7 @@
           <v-btn value="归档">
             归档
           </v-btn>
-          <v-btn value="友链">
+          <v-btn to="/blogroll/blogroll" value="友链">
             友链
           </v-btn>
           <v-btn value="留言板">
@@ -73,6 +73,11 @@ export default {
           icon: "mdi-book-open-outline",
           title: "博客",
           to: "/article/article"
+        },
+        {
+          icon: "mdi-book-open-outline",
+          title: "友情链接",
+          to: "/blogroll/blogroll"
         }
       ],
       title: "Starry"
