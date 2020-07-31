@@ -12,7 +12,7 @@
       <el-form-item>
         <div id="editor">
           <mavon-editor
-            codeStyle="agate"
+            codeStyle="monokai-sublime"
             v-model="model.markdown"
             @save="saveDoc"
             style="height: 100%"

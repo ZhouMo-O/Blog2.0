@@ -58,6 +58,16 @@
               <el-menu-item index="/user/list">用户列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-s-order"></i>友链管理
+            </template>
+            <el-menu-item-group>
+              <template slot="title"></template>
+              <el-menu-item index="/blogroll/create">添加友链</el-menu-item>
+              <el-menu-item index="/blogroll/list">友链列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
 
