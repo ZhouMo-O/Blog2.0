@@ -39,19 +39,7 @@
       </div>
       <v-card class="articleBody">
         <div class="article">
-          <div class="mavonEditor">
-            <no-ssr>
-              <mavon-editor
-                codeStyle="ascetic"
-                v-model="model.html"
-                :subfield="false"
-                defaultOpen="preview"
-                :toolbarsFlag="false"
-                :boxShadow="false"
-                :ishljs="true"
-              />
-            </no-ssr>
-          </div>
+          <v-card-text v-html="model.html"></v-card-text>
         </div>
         <like @showMessage="showMsg" :blogId="this.$route.params.id"></like>
         <comment
@@ -117,7 +105,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+code {
+  color: red;
+  background: red;
+  border: 1px solid red;
+}
 .articleBody {
   position: relative;
   z-index: 0;
