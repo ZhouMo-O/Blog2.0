@@ -1,6 +1,7 @@
 <template>
   <v-app dark>
     <navComponent />
+
     <v-content>
       <nuxt />
     </v-content>
@@ -25,3 +26,32 @@ export default {
   methods: {}
 };
 </script>
+<style>
+.v-application .hljs {
+  background: initial;
+  color: initial;
+  font-family: initial;
+}
+
+.v-application code {
+  background: initial;
+  color: initial;
+}
+
+.v-application code .hljs-keyword {
+  background: initial;
+  color: initial;
+  font-family: initial;
+}
+.v-application code .hljs-built_in {
+  background: initial;
+  color: initial;
+  font-family: initial;
+}
+
+.v-application code .hljs-comment {
+  background: initial;
+  color: initial;
+  font-family: initial;
+}
+</style>

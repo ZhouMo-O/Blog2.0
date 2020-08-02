@@ -1,9 +1,28 @@
 module.exports = (app) => {
   const express = require("express");
   console.log(new Date().toLocaleString());
-
   const router = express.Router({
     mergeParams: true,
+  });
+  const hljs = require("highlight.js");
+  const MarkdownIt = require("markdown-it")({
+    highlight: function (str, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        try {
+          return (
+            '<pre class="hljs"><code>' +
+            hljs.highlight(lang, str, true).value +
+            "</code></pre>"
+          );
+        } catch (__) {}
+      }
+
+      return (
+        '<pre class="hljs"><code>' +
+        MarkdownIt.utils.escapeHtml(str) +
+        "</code></pre>"
+      );
+    },
   });
 
   const resourceMiddleware = require("../midware/resource");
@@ -34,6 +53,10 @@ module.exports = (app) => {
 
   router.get("/:id", async (req, res) => {
     const item = await req.Model.findById(req.params.id); //.populate("relatedTag");
+    if (item.markdown) {
+      item.html = MarkdownIt.render(item.markdown);
+      console.log(item.html);
+    }
     console.log(`查找 ${req.params.id}`);
     res.send(item);
   });

@@ -9,6 +9,9 @@ import commentList from "../views/comment/commentList";
 import tagCreate from "../views/tag/tagCreate";
 import tagList from "../views/tag/tagList";
 
+import blogrollCreate from "../views/blogroll/blogrollCreate";
+import blogrollList from "../views/blogroll/blogrollList";
+
 import userCreate from "../views/user/userCreate";
 import userList from "../views/user/userList";
 
@@ -72,6 +75,22 @@ const router = new VueRouter({
           props: true,
           name: tagCreate,
           component: tagCreate,
+        },
+        {
+          path: "/blogroll/create",
+          name: blogrollCreate,
+          component: blogrollCreate,
+        },
+        {
+          path: "/blogroll/list",
+          name: blogrollList,
+          component: blogrollList,
+        },
+        {
+          path: "/blogroll/edit/:id",
+          props: true,
+          name: blogrollCreate,
+          component: blogrollCreate,
         },
         {
           path: "/user/create",
