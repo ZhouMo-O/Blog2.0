@@ -32,7 +32,7 @@ export default {
   methods: {
     //根据ID获取要编辑的友链
     async fetchTag() {
-      let res = await restgetOne("article", "5f23cd58f20af766594597bd");
+      let res = await restgetOne("article", "5f01c32095131f26d821ed8b");
       this.model = res.data;
       console.log(this.model);
     },
