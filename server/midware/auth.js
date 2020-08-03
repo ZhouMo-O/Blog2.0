@@ -14,14 +14,12 @@ module.exports = (app) => {
     }
 
     //错误token处理
-    try {
-      const id = jwt.verify(token, process.env.token);
-      req.user = await adminUser.findById(id);
-    } catch (error) {
-      res.status(401).send({ message: "伪造token？你妈死了！" });
+
+    const id = jwt.verify(token, process.env.token);
+    req.user = await adminUser.findById(id);
+    if (!req.user) {
+      res.status(401).send({ message: "无效token!" });
     }
-
-
 
     await next();
   };

@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-6 pr-6">
+  <div class="pb-5 pl-6 pr-6">
     <v-divider class="mt-6 mb-4"></v-divider>
     <v-form v-model="valid">
       <v-row>
@@ -40,7 +40,7 @@
       <v-btn :disabled="!valid" @click="submit" clos="md-12">submit</v-btn>
     </v-form>
     <v-divider class="mt-4 mb-4"></v-divider>
-    <v-card v-for="com in commentList" :key="com._id">
+    <v-card class="commentList" v-for="com in commentList" :key="com._id">
       <v-card :flat="true" max-width="100%">
         <v-list-item class="grow">
           <v-list-item-avatar color="grey darken-3">
@@ -119,7 +119,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.commentList {
+  margin-bottom: 10px;
+}
+
 #message {
   z-index: 999;
 }

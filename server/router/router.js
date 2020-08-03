@@ -8,7 +8,7 @@ module.exports = (app) => {
   const resourceMiddleware = require("../midware/resource");
   const authMiddleware = require("../midware/auth");
 
-  router.post("/", authMiddleware(), async (req, res) => {
+  router.post("/", async (req, res) => {
     const model = await req.Model.create(req.body);
     console.log(`创建数据`, req.body);
     res.send(model);
