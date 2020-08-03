@@ -2,7 +2,7 @@
 
 一次全新的尝试，为更好。
 
-博客地址：https://blog5.net.cn
+博客地址：https://www.blog5.net.cn/
 
 ## 技术栈：
 
