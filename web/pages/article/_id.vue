@@ -10,9 +10,7 @@
     >
       {{ text }}
       <template>
-        <v-btn dark text @click="snackbar = false">
-          Close
-        </v-btn>
+        <v-btn dark text @click="snackbar = false">Close</v-btn>
       </template>
     </v-snackbar>
     <v-card color="#F0F0F0" class="articleTopCard">
@@ -21,29 +19,30 @@
     <v-container id="articleContainer">
       <div class="articleMessage">
         <v-chip close-icon="mdi-calendar-month" small color="#F0F0F0">
-          <v-icon class="articleIcon">mdi-calendar-month</v-icon
-          >{{ model.createTime }}</v-chip
-        >
+          <v-icon class="articleIcon">mdi-calendar-month</v-icon>
+          {{ model.createTime }}
+        </v-chip>
         <v-chip small color="#F0F0F0">
-          <v-icon dense class="articleIcon">mdi-eye-outline</v-icon
-          >{{ model.read }}</v-chip
-        >
+          <v-icon dense class="articleIcon">mdi-eye-outline</v-icon>
+          {{ model.read }}
+        </v-chip>
         <v-chip small color="#F0F0F0">
-          <v-icon class="articleIcon">mdi-comment-processing-outline</v-icon
-          >{{ model.comment }}</v-chip
-        >
+          <v-icon class="articleIcon">mdi-comment-processing-outline</v-icon>
+          {{ model.comment }}
+        </v-chip>
         <v-chip small color="#F0F0F0">
-          <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon
-          >{{ model.like }}</v-chip
-        >
+          <v-icon class="articleIcon">mdi-thumb-up-outline</v-icon>
+          {{ model.like }}
+        </v-chip>
       </div>
       <v-card class="articleBody">
         <div class="article">
           <div class="mavonEditor">
             <no-ssr>
               <mavon-editor
+                previewBackground="#ffffff"
                 codeStyle="ascetic"
-                v-model="model.html"
+                v-model="model.markdown"
                 :subfield="false"
                 defaultOpen="preview"
                 :toolbarsFlag="false"
@@ -118,6 +117,15 @@ export default {
 </script>
 
 <style scoped>
+/* mavonEditor样式 */
+.markdown-body {
+  background: #ffffff !important;
+  min-width: 0px !important;
+  border: 0px;
+}
+
+/* end */
+
 .articleBody {
   position: relative;
   z-index: 0;
@@ -131,6 +139,7 @@ export default {
   width: 100vw;
   height: 45vh;
   background: #4f7da4;
+  /* border: 1px solid red !important; */
   background-size: cover;
 }
 
@@ -140,17 +149,17 @@ h2 {
 }
 
 .articleBody {
-  width: 80vw;
   min-height: 50vh;
   margin: 0 auto;
-  padding: 30px;
+
   position: relative;
   top: -100px;
+  /* border: 1px solid red; */
   z-index: 0;
 }
 
 .articleMessage {
-  width: 80vw;
+  width: 95vw;
   margin: 0 auto;
   position: relative;
   top: -105px;
@@ -159,7 +168,6 @@ h2 {
 }
 
 .articleIcon {
-  font-size: 25px;
-  margin-right: 2px;
+  font-size: 23px;
 }
 </style>
