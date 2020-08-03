@@ -6,9 +6,7 @@
 
 ## 简介:
 
- Starry是一款前端基于Nuxt+Vuetify,管理端和server端分别基于vue+elementui和express+mongoose的个人博客全栈项目，
- 相较于第一版的个人博客[Sunset](https://github.com/1181649328/Blog "个人博客"),Starry最大的特点是在借由Nuxt  
- 支持了ssr以后seo更加的友好，搭配了vuetify之后更是让Starry在移动端有非常优秀的表现。并且自主开发了评论、点赞、私密博客等功能。  
+ Starry是一款前端基于Nuxt+Vuetify,管理端和server端分别基于vue+elementui和express+mongoose的个人博客全栈项目，相较于第一版的个人博客[Sunset](https://github.com/1181649328/Blog "个人博客"),Starry最大的特点是在借由Nuxt支持了ssr以后seo更加的友好，搭配了vuetify之后更是让Starry在移动端有非常优秀的表现。并且自主开发了评论、点赞、私密博客等功能。  
 
  但是上面都不是最重要的，我希望Starry能够是一款简单易上手，并且对二次开发非常友好的项目，所以这一版博客进步最大的应该是我对Starry的工程管理，
  首先Starry的git提交粒度非常的细小，并且几乎每一次提交都有较为详细的说明。其次我开放了一个branch来作为新功能的开发，来保证master的稳定性和健壮性。
