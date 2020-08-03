@@ -1,6 +1,6 @@
 <template>
   <div class="pl-4 pr-4">
-    <v-divider class="mt-4 mb-4"></v-divider>
+    <v-divider class="mt-5 mb-4"></v-divider>
     <v-form v-model="valid">
       <v-row>
         <v-col cols="12" md="4">
