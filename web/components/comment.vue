@@ -1,10 +1,16 @@
 <template>
-  <div class="pl-4 pr-4">
-    <v-divider class="mt-5 mb-4"></v-divider>
+  <div class="pl-6 pr-6">
+    <v-divider class="mt-6 mb-4"></v-divider>
     <v-form v-model="valid">
       <v-row>
         <v-col cols="12" md="4">
-          <v-text-field v-model="comment.name" :rules="nameRules" :counter="10" label="昵称" required></v-text-field>
+          <v-text-field
+            v-model="comment.name"
+            :rules="nameRules"
+            :counter="10"
+            label="昵称"
+            required
+          ></v-text-field>
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field
@@ -15,7 +21,11 @@
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="4">
-          <v-text-field v-model="comment.domain" :counter="30" label="域名(头像将会指向你的域名)"></v-text-field>
+          <v-text-field
+            v-model="comment.domain"
+            :counter="30"
+            label="域名(头像将会指向你的域名)"
+          ></v-text-field>
         </v-col>
       </v-row>
       <v-textarea
@@ -73,22 +83,22 @@ export default {
         domain: "",
         email: "",
         content: "",
-        blogId: this.blogId,
+        blogId: this.blogId
       },
       nameRules: [
-        (v) => !!v || "您贵姓？",
-        (v) => (v && v.length <= 10) || "超“十”了",
+        v => !!v || "您贵姓？",
+        v => (v && v.length <= 10) || "超“十”了"
       ],
       email: "",
       emailRules: [
-        (v) => !!v || "邮件是必须的，收到了回复会以邮件形式通知你",
-        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+        v => !!v || "邮件是必须的，收到了回复会以邮件形式通知你",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
-      commentContent: [(v) => !!v || "多少说一句"],
+      commentContent: [v => !!v || "多少说一句"]
     };
   },
   props: {
-    blogId: { type: String },
+    blogId: { type: String }
   },
   methods: {
     async submit() {
@@ -101,11 +111,11 @@ export default {
       let comment = await restGetAll("comment", { blogId: this.blogId });
       this.commentList = comment.data;
       console.log(this.commentList);
-    },
+    }
   },
   mounted() {
     this.getArticleComment();
-  },
+  }
 };
 </script>
 

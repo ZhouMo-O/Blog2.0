@@ -27,10 +27,11 @@ export default {
 };
 </script>
 <style>
+/* 重置vuetify对于code标签的css样式 ，并且自己应用代码高亮样式*/
 pre {
+  padding: 0px !important;
   background: initial !important;
-  padding-left: 15px !important;
-  margin-top: 10px !important;
+  margin: 25px 0 9px 0px !important;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2) !important;
   border-radius: 4px !important;
 }
@@ -44,7 +45,9 @@ pre {
 }
 
 code {
-  box-shadow: none !important ;
+  min-width: 700px !important;
+  box-shadow: none !important;
+  overflow-x: hidden !important;
 }
 .hljs {
   color: #cccccc !important;
@@ -52,6 +55,7 @@ code {
   background: #23241f !important;
   overflow: auto !important;
 }
+
 .hljs-keyword {
   color: #cc99cd !important;
 }
