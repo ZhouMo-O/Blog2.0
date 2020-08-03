@@ -26,6 +26,7 @@ app.use(
     origin: [
       `http://localhost:3000`,
       `http://192.168.2.100:8080`,
+      `http://192.168.1.172:3000`,
       `http://localhost:8080`,
       `http://localhost:5555`,
       `https://www.blog5.net.cn`,
