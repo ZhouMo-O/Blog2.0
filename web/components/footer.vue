@@ -1,11 +1,6 @@
 <template>
   <v-footer padless>
-    <v-card
-      width="100vw"
-      flat
-      tile
-      class="indigo lighten-1 white--text text-center"
-    >
+    <v-card width="100vw" flat tile class="indigo lighten-1 white--text text-center">
       <v-card-text>
         <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
           <v-icon size="24px">{{ icon }}</v-icon>
@@ -20,17 +15,21 @@
               min-width="300"
               min-height="40"
               class="indigo lighten-1 white--text text-center"
-              ><tagCloud /></v-card
-          ></v-col>
+            >
+              <tagCloud />
+            </v-card>
+          </v-col>
         </v-row>
       </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Starry</strong><br />
+        {{ new Date().getFullYear() }} —
+        <strong>Starry</strong>
+        <br />
         <strong>
-          <a href="http://www.miitbeian.gov.cn/">渝ICP备2008467</a>
+          <a href="http://www.beian.gov.cn/portal/index.do/">渝ICP备2008467</a>
         </strong>
       </v-card-text>
     </v-card>
@@ -41,11 +40,11 @@
 import tagCloud from "./tagCloud";
 export default {
   data: () => ({
-    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
+    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
   }),
   components: {
-    tagCloud
-  }
+    tagCloud,
+  },
 };
 </script>
 
