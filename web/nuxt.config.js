@@ -6,18 +6,17 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTemplate: "%s - " + process.env.npm_package_name,
-    title: process.env.npm_package_name || "",
+    title: "Starry-周末的个人博客",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || ""
+        content: "Nuxt博客，个人博客，前端开发，后端开发，服务端渲染"
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" }]
   },
   /*
    ** Customize the progress-bar color
@@ -38,7 +37,10 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: [["@nuxtjs/dotenv"]],
+  modules: [["@nuxtjs/dotenv"], ["@nuxtjs/axios"]],
+  axios: {
+    // proxyHeaders: false
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

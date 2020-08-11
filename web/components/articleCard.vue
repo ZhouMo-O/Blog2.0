@@ -71,6 +71,11 @@
 <script>
 import { restGetAll, restGetOne } from "../api/api";
 export default {
+  async asyncData({ $axios }) {
+    const ip = await $axios.$get("http://icanhazip.com");
+    console.log(ip);
+    return { ip };
+  },
   data: () => ({
     overlay: false,
     tagData: {},
