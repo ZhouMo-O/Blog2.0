@@ -1,16 +1,18 @@
+const user = require("./user");
+
 module.exports = (app) => {
   let commentDb = require("../model/Like");
   let articleDb = require("../model/Article");
   let sendmail = require("../plugin/sendEmail");
   //点赞接口
   app.post("/api/like", async (req, res) => {
-    const userIp = req.ip;
+    const userIp = req.headers["X-Real-IP"] || req.ip;
     const articleId = req.body.articleId;
     const userLike = await commentDb.findOne({
       userIp: userIp,
       articleId: articleId,
     });
-
+    console.log(`用户点赞Ip: ${userIp}`);
     if (userLike) {
       try {
         await commentDb.findOneAndRemove({
