@@ -1,14 +1,14 @@
 const user = require("./user");
 
 module.exports = (app) => {
-  let commentDb = require("../model/Like");
+  let likeDb = require("../model/Like");
   let articleDb = require("../model/Article");
   let sendmail = require("../plugin/sendEmail");
   //点赞接口
   app.post("/api/like", async (req, res) => {
     const userIp = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
     const articleId = req.body.articleId;
-    const userLike = await commentDb.findOne({
+    const userLike = await likeDb.findOne({
       userIp: userIp,
       articleId: articleId,
     });
@@ -16,7 +16,7 @@ module.exports = (app) => {
     if (userLike) {
       console.log(`用户取消点赞`);
       try {
-        await commentDb.findOneAndRemove({
+        await likeDb.findOneAndRemove({
           articleId: articleId,
           userIp: userIp,
         });
@@ -31,7 +31,7 @@ module.exports = (app) => {
       }
     } else {
       try {
-        await commentDb.create({ articleId, userIp });
+        await likeDb.create({ articleId, userIp });
         await articleDb.findByIdAndUpdate(
           { _id: articleId },
           { $inc: { like: 1 } }
@@ -48,7 +48,7 @@ module.exports = (app) => {
   //判断用户是否点过赞 主要用于在页面加载的时候的时候，来改变界面的css
   app.get("/api/like/beenLiked/:id", async (req, res) => {
     const userIp = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
-    const articleId = await commentDb.findOne({
+    const articleId = await likeDb.findOne({
       userIp: userIp,
       articleId: req.params.id,
     });
@@ -61,7 +61,7 @@ module.exports = (app) => {
 
   //点赞数量
   app.get("api/like/likeSum/:id", async (req, res) => {
-    const articleSum = await commentDb
+    const articleSum = await likeDb
       .findOne({ articleId: req.params.id })
       .count();
     res.send({ msg: "点赞数量", articleSum: articleSum });
