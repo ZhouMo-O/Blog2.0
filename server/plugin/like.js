@@ -6,7 +6,7 @@ module.exports = (app) => {
   let sendmail = require("../plugin/sendEmail");
   //点赞接口
   app.post("/api/like", async (req, res) => {
-    const userIp = req.headers["X-Real-IP"] || req.ip;
+    const userIp = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
     const articleId = req.body.articleId;
     const userLike = await commentDb.findOne({
       userIp: userIp,
