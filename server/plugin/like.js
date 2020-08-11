@@ -47,9 +47,12 @@ module.exports = (app) => {
 
   //判断用户是否点过赞 主要用于在页面加载的时候的时候，来改变界面的css
   app.get("/api/like/beenLiked/:id", async (req, res) => {
-    const articleId = await commentDb.findOne({ articleId: req.params.id });
     const userIp = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
-    if (articleId && articleId.userIp == userIp) {
+    const articleId = await commentDb.findOne({
+      userIp: userIp,
+      articleId: articleId,
+    });
+    if (articleId) {
       res.status(200).send({ code: "200", msg: "已经点赞" });
     } else {
       res.status(200).send({ code: "400", msg: "还未点赞" });
