@@ -50,7 +50,7 @@ module.exports = (app) => {
     const userIp = req.get("X-Real-IP") || req.get("X-Forwarded-For") || req.ip;
     const articleId = await commentDb.findOne({
       userIp: userIp,
-      articleId: articleId,
+      articleId: req.params.id,
     });
     if (articleId) {
       res.status(200).send({ code: "200", msg: "已经点赞" });
