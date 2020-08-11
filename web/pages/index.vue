@@ -23,7 +23,8 @@ export default {
 
 <style scoped>
 .indexCard {
-  background: url("https://images.unsplash.com/photo-1481988535861-271139e06469?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1067&q=80");
+  background: url("https://xiaowublog1.oss-cn-shanghai.aliyuncs.com/starry.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
   width: 100vw;
   height: 100vh;
