@@ -23,3 +23,5 @@ class Message {
     return { code: 1, data: message };
   }
 }
+
+module.exports = Message;

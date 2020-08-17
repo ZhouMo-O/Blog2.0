@@ -15,6 +15,18 @@ const Schema = new mongoose.Schema({
   email: {
     type: String,
   },
+  createTime: {
+    type: String,
+    default: () => {
+      return new Date().toLocaleString();
+    },
+  },
+  upDateTime: {
+    type: String,
+    default: () => {
+      return new Date().toLocaleString();
+    },
+  },
 });
 
 module.exports = mongoose.model("Message", Schema);
