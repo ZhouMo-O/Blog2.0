@@ -71,11 +71,6 @@ export default {
         },
         {
           icon: "mdi-book-open-outline",
-          title: "博客",
-          to: "/article/article"
-        },
-        {
-          icon: "mdi-book-open-outline",
           title: "友情链接",
           to: "/blogroll/blogroll"
         }
