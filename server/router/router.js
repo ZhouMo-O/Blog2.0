@@ -32,9 +32,14 @@ module.exports = (app) => {
   });
 
   router.get("/:id", async (req, res) => {
-    const item = await req.Model.findById(req.params.id); //.populate("relatedTag");
-    console.log(`查找 ${req.params.id}`);
-    res.send(item);
+    try {
+      const item = await req.Model.findById(req.params.id); //.populate("relatedTag");
+      console.log(`查找 ${req.params.id}`);
+      res.send(item);
+    } catch (error) {
+      console.log("error");
+      res.status(404).send({ message: "not find" });
+    }
   });
 
   router.put("/:id", async (req, res) => {
