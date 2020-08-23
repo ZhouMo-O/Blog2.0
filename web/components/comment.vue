@@ -22,7 +22,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="comment.domain"
+            v-model="comment.site"
             :counter="30"
             label="域名(头像将会指向你的域名)"
           ></v-text-field>
@@ -42,7 +42,7 @@
     <v-divider class="mt-4 mb-4"></v-divider>
     <v-card class="commentList" v-for="com in commentList" :key="com._id">
       <v-card :flat="true" max-width="100%">
-        <v-list-item class="grow">
+        <v-list-item :target="true" :href="com.site" class="grow">
           <v-list-item-avatar color="grey darken-3">
             <v-img
               class="elevation-6"

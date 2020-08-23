@@ -5,6 +5,7 @@
     <el-table-column prop="blogId" label="博客标题" width="180">
     </el-table-column>
     <el-table-column prop="name" label="昵称"></el-table-column>
+    <el-table-column prop="site" label="网站"></el-table-column>
     <el-table-column prop="content" label="内容"></el-table-column>
     <el-table-column prop="email" label="邮箱"></el-table-column>
 
