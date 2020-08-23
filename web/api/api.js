@@ -36,6 +36,11 @@ let likeSum = async articleId => {
   return await http.get(`like/likeSum/${articleId}`);
 };
 
+//评论
+let postComment = async data => {
+  return await http.post(`comment`, data);
+};
+
 export {
   restGetAll,
   restGetOne,
@@ -44,5 +49,6 @@ export {
   restDeleteOne,
   like,
   beenLiked,
-  likeSum
+  likeSum,
+  postComment
 };

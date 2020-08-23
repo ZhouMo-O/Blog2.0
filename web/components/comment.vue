@@ -42,13 +42,18 @@
     <v-divider class="mt-4 mb-4"></v-divider>
     <v-card class="commentList" v-for="com in commentList" :key="com._id">
       <v-card :flat="true" max-width="100%">
-        <v-list-item :target="true" :href="com.site" class="grow">
-          <v-list-item-avatar color="grey darken-3">
-            <v-img
-              class="elevation-6"
-              src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-            ></v-img>
-          </v-list-item-avatar>
+        <v-list-item class="grow">
+          <a target="true" v-bind:href="com.site">
+            <v-list-item-avatar
+              :target="true"
+              :href="com.site"
+              color="grey darken-3"
+            >
+              <v-img
+                class="elevation-6"
+                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+              ></v-img> </v-list-item-avatar
+          ></a>
 
           <v-list-item-content>
             <v-list-item-title>{{ com.name }}</v-list-item-title>
@@ -72,7 +77,7 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { restGetAll, restPostData, restUpdata } from "../api/api";
+import { restGetAll, restPostData, restUpdata, postComment } from "../api/api";
 export default {
   data() {
     return {
@@ -102,7 +107,7 @@ export default {
   },
   methods: {
     async submit() {
-      await restPostData("comment", this.comment);
+      await postComment(this.comment);
       this.$emit("showMessage", { msg: "评论成功!", type: "info" });
       // await restUpdata("article",{})
       this.getArticleComment();

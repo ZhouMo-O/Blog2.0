@@ -51,7 +51,7 @@
                     <v-icon class="articleIcon"
                       >mdi-comment-processing-outline</v-icon
                     >
-                    10
+                    {{ item.comment }}
                   </p>
                   <!-- like -->
                   <p class="like overline">

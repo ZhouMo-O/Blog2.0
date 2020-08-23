@@ -64,4 +64,6 @@ module.exports = (app) => {
   require("../plugin/svgCaptcha")(app);
   //user
   require("../plugin/user")(app, authMiddleware());
+  //comment
+  require("../plugin/comment")(app);
 };
