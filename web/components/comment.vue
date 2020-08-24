@@ -61,8 +61,9 @@
 
           <v-list-item-content>
             <v-row class="center mr-1" justify="end">
-              <v-icon class="mr-1">mdi-heart</v-icon>
-              <span class="subheading mr-2">0</span>
+              <v-icon class="articleIcon"
+                >mdi-comment-processing-outline</v-icon
+              >
             </v-row>
           </v-list-item-content>
         </v-list-item>
