@@ -70,6 +70,46 @@
         <v-card-text class="text-h3">
           {{ com.content }}
           <v-divider class="mt-4 mb-4"></v-divider>
+          <v-form v-model="valid">
+            <v-row>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="com.wb.wbName"
+                  :rules="nameRules"
+                  :counter="10"
+                  label="昵称"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="com.wbEmail"
+                  :rules="emailRules"
+                  label="E-mail(收到回复会以邮件通知你)"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="com.wbSite"
+                  :counter="30"
+                  label="域名(头像将会指向你的域名)"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-textarea
+              v-model="com.wbContent"
+              name="input-7-1"
+              filled
+              label="输入评论"
+              auto-grow
+              :rules="commentContent"
+              required
+            ></v-textarea>
+            <v-btn :disabled="!valid" @click="writeBack(com)" clos="md-12"
+              >submit</v-btn
+            >
+          </v-form>
         </v-card-text>
       </v-card>
     </v-card>
@@ -112,6 +152,15 @@ export default {
       this.$emit("showMessage", { msg: "评论成功!", type: "info" });
       // await restUpdata("article",{})
       this.getArticleComment();
+    },
+    async writeBack(com) {
+      // let wbObj = JSON.stringify(JSON.parse(com));
+      // wbObj.name = wbObj.wbName;
+      // wbObj.email = wbObj.wbEmail;
+      // wbObj.site = wbObj.wbSite;
+      // wbObj.content = wbObj.wbContent;
+
+      console.log(wbObj);
     },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
