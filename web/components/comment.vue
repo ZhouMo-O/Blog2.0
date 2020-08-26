@@ -1,7 +1,7 @@
 <template>
   <div class="pb-5 pl-6 pr-6">
     <v-divider class="mt-6 mb-4"></v-divider>
-    <v-form v-model="valid">
+    <v-form v-model="valid" v-if="show">
       <v-row>
         <v-col cols="12" md="4">
           <v-text-field
@@ -61,7 +61,7 @@
 
           <v-list-item-content>
             <v-row class="center mr-1" justify="end">
-              <v-icon class="articleIcon"
+              <v-icon class="articleIcon" @click="showComment(com)"
                 >mdi-comment-processing-outline</v-icon
               >
             </v-row>
@@ -70,11 +70,11 @@
         <v-card-text class="text-h3">
           {{ com.content }}
           <v-divider class="mt-4 mb-4"></v-divider>
-          <v-form v-model="valid">
+          <v-form v-model="valid" v-if="com.isShow">
             <v-row>
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="com.wb.wbName"
+                  v-model="comment.name"
                   :rules="nameRules"
                   :counter="10"
                   label="昵称"
@@ -83,7 +83,7 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="com.wbEmail"
+                  v-model="comment.email"
                   :rules="emailRules"
                   label="E-mail(收到回复会以邮件通知你)"
                   required
@@ -91,14 +91,14 @@
               </v-col>
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="com.wbSite"
+                  v-model="comment.site"
                   :counter="30"
                   label="域名(头像将会指向你的域名)"
                 ></v-text-field>
               </v-col>
             </v-row>
             <v-textarea
-              v-model="com.wbContent"
+              v-model="comment.content"
               name="input-7-1"
               filled
               label="输入评论"
@@ -123,6 +123,7 @@ export default {
   data() {
     return {
       valid: true,
+      show: true,
       commentList: [],
       comment: {
         name: "",
@@ -162,9 +163,20 @@ export default {
 
       console.log(wbObj);
     },
+    showComment(com) {
+      const nowStatus = com.isShow;
+      this.commentList.forEach(item => {
+        item.isShow = false;
+      });
+      com.isShow = !nowStatus;
+      this.show = nowStatus;
+    },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
-      this.commentList = comment.data;
+      this.commentList = comment.data.map(item => {
+        this.$set(item, "isShow", false); //隐藏当前评论组件
+        return item;
+      });
       console.log(this.commentList);
     }
   },
