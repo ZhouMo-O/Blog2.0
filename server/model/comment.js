@@ -20,6 +20,7 @@ const Schema = new mongoose.Schema({
   },
   istopComment: {
     type: Boolean,
+    default: true,
   },
   replyId: [
     {

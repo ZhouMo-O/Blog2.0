@@ -101,7 +101,7 @@
               v-model="comment.content"
               name="input-7-1"
               filled
-              label="输入评论"
+              :label="label"
               auto-grow
               :rules="commentContent"
               required
@@ -124,6 +124,7 @@ export default {
     return {
       valid: true,
       show: true,
+      label: "输入评论",
       commentList: [],
       comment: {
         name: "",
@@ -155,15 +156,17 @@ export default {
       this.getArticleComment();
     },
     async writeBack(com) {
-      // let wbObj = JSON.stringify(JSON.parse(com));
-      // wbObj.name = wbObj.wbName;
-      // wbObj.email = wbObj.wbEmail;
-      // wbObj.site = wbObj.wbSite;
-      // wbObj.content = wbObj.wbContent;
-
-      console.log(wbObj);
+      this.comment.content = `回复 ${com.name}：` + this.comment.content; //添加回复
+      this.comment.replyId = com._id; //记录id
+      this.comment.istopComment = false; //非顶级评论
+      await postComment(this.comment); //请求api
+      this.$emit("showMessage", { msg: "评论成功!", type: "info" }); //提示
+      this.getArticleComment(); //刷新评论
+      this.comment.content = ""; //清空输入框
+      this.show = true; //重新展示默认输入框
     },
     showComment(com) {
+      this.label = `回复 ${com.name}：`;
       const nowStatus = com.isShow;
       this.commentList.forEach(item => {
         item.isShow = false;
