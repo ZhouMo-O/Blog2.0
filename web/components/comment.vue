@@ -128,6 +128,7 @@ export default {
       commentList: [],
       comment: {
         name: "",
+        istopComment: true,
         domain: "",
         email: "",
         content: "",
