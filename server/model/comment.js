@@ -16,7 +16,12 @@ const Schema = new mongoose.Schema({
     type: String,
   },
   blogId: {
-    type: String,
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "Article",
+  },
+  isauthorsComment: {
+    type: Boolean,
+    default: false,
   },
   istopComment: {
     type: Boolean,
@@ -25,7 +30,7 @@ const Schema = new mongoose.Schema({
   replyId: [
     {
       type: mongoose.SchemaTypes.ObjectId,
-      ref: "comment",
+      ref: "Comment",
     },
   ],
   createTime: {
