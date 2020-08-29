@@ -174,6 +174,7 @@ export default {
       });
       com.isShow = !nowStatus;
       this.show = nowStatus;
+      this.comment.content = "";
     },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
