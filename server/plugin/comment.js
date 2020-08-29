@@ -25,10 +25,6 @@ module.exports = (app) => {
       if (replyEmail.email) {
         sendEmail(replyEmail.email, `收到一条回复：${req.body.content}`);
       }
-      // sendEmail(
-      //   process.env.eamailUser,
-      //   `一条评论收到回复：${req.body.content}`
-      // );
       console.log(`评论数据(回复)：`, req.body);
       res.send(model);
     } else {
@@ -40,12 +36,12 @@ module.exports = (app) => {
       const replyEmail = await commentDb.findById(req.body.replyId);
       console.log(`查找id`, replyEmail);
       if (replyEmail.email) {
-        // sendEmail(replyEmail.email, `收到一条回复：${req.body.content}`);
+        sendEmail(replyEmail.email, `收到一条回复：${req.body.content}`);
       }
-      // sendEmail(
-      //   process.env.eamailUser,
-      //   `一条评论收到回复：${req.body.content}`
-      // );
+      sendEmail(
+        process.env.eamailUser,
+        `一条评论收到回复：${req.body.content}`
+      );
       console.log(`评论数据(回复)：`, req.body);
       res.send(model);
     }

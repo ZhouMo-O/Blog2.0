@@ -16,8 +16,7 @@ const Schema = new mongoose.Schema({
     type: String,
   },
   blogId: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Article",
+    type: String,
   },
   isauthorsComment: {
     type: Boolean,
