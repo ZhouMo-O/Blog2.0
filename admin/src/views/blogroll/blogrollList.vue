@@ -2,9 +2,12 @@
   <el-table :data="items" stripe style="width: 100%">
     <el-table-column prop="createTime" label="日期" width="180">
     </el-table-column>
-    <el-table-column prop="tagName" label="博客标题" width="180">
+    <el-table-column prop="blogRollName" label="友链名称" width="180">
     </el-table-column>
-
+    <el-table-column prop="blogRollAddr" label="友链地址" width="180">
+    </el-table-column>
+    <el-table-column prop="blogRollIcon" label="头像地址" width="180">
+    </el-table-column>
     <el-table-column fixed="right" label="操作" width="300">
       <template slot="header" slot-scope="scope">
         <el-input
@@ -17,13 +20,13 @@
       </template>
       <template slot-scope="scope">
         <el-button
-          @click="$router.push(`/tag/view/${scope.row._id}`)"
+          @click="$router.push(`/blogroll/view/${scope.row._id}`)"
           type="text"
           size="small"
           >查看</el-button
         >
         <el-button
-          @click="$router.push(`/tag/edit/${scope.row._id}`)"
+          @click="$router.push(`/blogroll/edit/${scope.row._id}`)"
           type="text"
           size="small"
           >编辑</el-button
@@ -43,7 +46,7 @@ import {
   filterBlog,
 } from "../../Api/api";
 export default {
-  name: "tagList",
+  name: "blogrollList",
   props: { id: {} },
   data() {
     return {
@@ -53,7 +56,7 @@ export default {
   },
   methods: {
     async fetch() {
-      const data = await restgetAll("tag");
+      const data = await restgetAll("blogroll");
       this.items = data.data;
     },
     SearchTable() {
@@ -67,7 +70,7 @@ export default {
         cancelButtonText: "取消",
       })
         .then(async () => {
-          await restDeleteOne("tag", row._id);
+          await restDeleteOne("blogroll", row._id);
           this.fetch();
           this.$notify({
             title: "成功",
@@ -81,7 +84,7 @@ export default {
     },
   },
   created() {
-    this.id ? this.findtagTag() : this.fetch();
+    this.id ? this.findblogrollBlogroll() : this.fetch();
   },
 };
 </script>

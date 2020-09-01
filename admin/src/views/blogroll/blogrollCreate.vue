@@ -7,10 +7,13 @@
       @submit.native.prevent="save('model')"
     >
       <el-form-item label="友链名称">
-        <el-input v-model="model.tagName"></el-input>
+        <el-input v-model="model.blogRollName"></el-input>
       </el-form-item>
-      <el-form-item label="友链名称">
-        <div v-html="model.html"></div>
+      <el-form-item label="友链地址">
+        <el-input v-model="model.blogRollAddr"></el-input>
+      </el-form-item>
+      <el-form-item label="头像地址">
+        <el-input v-model="model.blogRollIcon"></el-input>
       </el-form-item>
       <el-form-item style="margin-top: 1rem;">
         <el-button type="primary" class="save" native-type="subumit"
@@ -24,15 +27,15 @@
 <script>
 import { restPostData, restgetOne, restUpdata } from "../../Api/api";
 export default {
-  name: "tagList",
+  name: "blogrollList",
   props: { id: {} },
   data() {
     return { model: {} };
   },
   methods: {
     //根据ID获取要编辑的友链
-    async fetchTag() {
-      let res = await restgetOne("article", "5f01c32095131f26d821ed8b");
+    async fetchBlogroll() {
+      let res = await restgetOne("blogroll", this.id);
       this.model = res.data;
       console.log(this.model);
     },
@@ -41,11 +44,11 @@ export default {
       let res;
       if (this.id) {
         this.model.upDateTime = new Date().toLocaleString(); //输入更新时间
-        res = await restUpdata("tag", this.id, this.model);
+        res = await restUpdata("blogroll", this.id, this.model);
       } else {
-        res = await restPostData("tag", this.model);
+        res = await restPostData("blogroll", this.model);
       }
-      this.$router.push("/tag/list");
+      this.$router.push("/blogroll/list");
       this.$notify({
         title: "成功",
         type: "success",
@@ -55,7 +58,7 @@ export default {
     },
   },
   created() {
-    this.fetchTag();
+    this.id && this.fetchBlogroll();
   },
 };
 </script>

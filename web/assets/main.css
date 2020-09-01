@@ -11,3 +11,7 @@
 .my-css {
   margin-top: 65px;
 }
+
+* {
+  text-decoration: none
+}
