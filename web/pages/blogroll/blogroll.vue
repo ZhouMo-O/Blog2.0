@@ -6,7 +6,7 @@
     <div>
       <v-container>
         <v-row>
-          <v-col :sm="3" :md="1" :lg="2" v-for="item in model" :key="item._id">
+          <v-col :sm="3" :md="3" :lg="2" v-for="item in model" :key="item._id">
             <v-hover>
               <template v-slot="{ hover }">
                 <a v-bind:href="item.blogRollAddr">
@@ -20,10 +20,7 @@
                     <v-img
                       class="white--text align-end"
                       height="150px"
-                      v-bind:src="
-                        model.blogRollIcon ||
-                          ` http://api.btstu.cn/sjtx/api.php?lx=c1&format=images`
-                      "
+                      v-bind:src="item.blogRollIcon"
                     >
                     </v-img>
 
@@ -48,13 +45,19 @@ import { restGetAll } from "../../api/api";
 export default {
   data() {
     return {
-      model: {}
+      model: []
     };
   },
   methods: {
     async getAllBlogRoll() {
-      let res = await restGetAll("blogRoll");
+      let res = await restGetAll("blogroll");
       this.model = res.data;
+      this.model.forEach(element => {
+        if (!element.blogRollIcon) {
+          return (element.blogRollIcon =
+            " http://api.btstu.cn/sjtx/api.php?lx=c1&format=images"); //没有头像的就给一个随机头像
+        }
+      });
     }
   },
   created() {
@@ -66,7 +69,7 @@ export default {
 <style>
 .articleTopCard {
   width: 100vw;
-  height: 45vh;
+  height: 35vh;
   background: #4f7da4;
   /* border: 1px solid red !important; */
   background-size: cover;
