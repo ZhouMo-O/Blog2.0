@@ -12,8 +12,8 @@
             @save="saveDoc"
             style="height: 100%"
             ref="md"
-            @imgAdd="$imgAdd"
-            @imgDel="$imgDel"
+            @imgAdd="imgAdd"
+            @imgDel="imgDel"
           ></mavon-editor>
         </div>
       </el-form-item>
@@ -55,9 +55,9 @@ export default {
     return { model: {}, tagList: [] };
   },
   methods: {
-    async imgAdd(pos, $file) {
-      // console.log(pos, file);
+    async imgAdd(pos, file) {
       try {
+        console.log(pos, file);
         let formdata = new FormData();
         formdata.append("file", file);
         let res = await uploadFile(formdata);
