@@ -9,7 +9,7 @@ module.exports = (app, auth) => {
         accessKeyId: process.env.accessKeyId,
         accessKeySecret: process.env.accessKeySecret,
         bucket: process.env.bucket,
-        secure: true,
+        // secure: true,
       },
     }),
   });
