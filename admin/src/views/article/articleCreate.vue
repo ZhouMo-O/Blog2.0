@@ -1,11 +1,6 @@
 <template>
   <div class="createArtlce">
-    <el-form
-      ref="model"
-      :model="model"
-      label-width="80px"
-      @submit.native.prevent="save('model')"
-    >
+    <el-form ref="model" :model="model" label-width="80px" @submit.native.prevent="save('model')">
       <el-form-item label="博客名称">
         <el-input v-model="model.title"></el-input>
       </el-form-item>
@@ -17,18 +12,13 @@
             @save="saveDoc"
             style="height: 100%"
             ref="md"
-            @imgAdd="imgAdd"
-            @imgDel="imgDel"
+            @imgAdd="$imgAdd"
+            @imgDel="$imgDel"
           ></mavon-editor>
         </div>
       </el-form-item>
       <el-form-item label="添加标签" prop="relatedTag">
-        <el-select
-          class="select"
-          v-model="model.relatedTag"
-          multiple
-          placeholder="请选择"
-        >
+        <el-select class="select" v-model="model.relatedTag" multiple placeholder="请选择">
           <el-option
             v-for="item in tagList"
             :key="item._id"
@@ -38,14 +28,11 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-switch v-model="model.privacy" inactive-text="私密文章">
-        </el-switch>
+        <el-switch v-model="model.privacy" inactive-text="私密文章"></el-switch>
       </el-form-item>
 
       <el-form-item style="margin-top: 1rem;">
-        <el-button type="primary" class="save" native-type="subumit"
-          >保存</el-button
-        >
+        <el-button type="primary" class="save" native-type="subumit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -68,14 +55,17 @@ export default {
     return { model: {}, tagList: [] };
   },
   methods: {
-    async imgAdd(pos, file) {
+    async imgAdd(pos, $file) {
       // console.log(pos, file);
-      let formdata = new FormData();
-      formdata.append("file", file);
-      let res = await uploadFile(formdata);
-
-      this.$refs.md.$img2Url(pos, res.data.url);
-      console.log(res);
+      try {
+        let formdata = new FormData();
+        formdata.append("file", file);
+        let res = await uploadFile(formdata);
+        console.log(res);
+        this.$refs.md.$img2Url(pos, res.data.url);
+      } catch (error) {
+        console.log(`文件上传失败：${error}`);
+      }
     },
 
     async imgDel(pos) {
