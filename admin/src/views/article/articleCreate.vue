@@ -1,8 +1,19 @@
 <template>
   <div class="createArtlce">
-    <el-form ref="model" :model="model" label-width="80px" @submit.native.prevent="save('model')">
+    <el-form
+      ref="model"
+      :model="model"
+      label-width="80px"
+      @submit.native.prevent="save('model')"
+    >
       <el-form-item label="博客名称">
         <el-input v-model="model.title"></el-input>
+      </el-form-item>
+      <el-form-item label="简要描述">
+        <el-input v-model="model.Intro"></el-input>
+      </el-form-item>
+      <el-form-item label="封面链接">
+        <el-input v-model="model.cover"></el-input>
       </el-form-item>
       <el-form-item>
         <div id="editor">
@@ -18,7 +29,12 @@
         </div>
       </el-form-item>
       <el-form-item label="添加标签" prop="relatedTag">
-        <el-select class="select" v-model="model.relatedTag" multiple placeholder="请选择">
+        <el-select
+          class="select"
+          v-model="model.relatedTag"
+          multiple
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in tagList"
             :key="item._id"
@@ -32,7 +48,9 @@
       </el-form-item>
 
       <el-form-item style="margin-top: 1rem;">
-        <el-button type="primary" class="save" native-type="subumit">保存</el-button>
+        <el-button type="primary" class="save" native-type="subumit"
+          >保存</el-button
+        >
       </el-form-item>
     </el-form>
   </div>

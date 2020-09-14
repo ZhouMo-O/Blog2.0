@@ -21,17 +21,15 @@
               <v-img
                 class="white--text align-end"
                 height="200px"
-                src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                v-bind:src="item.cover"
               >
                 <v-card-title>{{ item.title }}</v-card-title>
               </v-img>
 
-              <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+              <v-card-subtitle class="pb-0">article</v-card-subtitle>
 
               <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-
-                <div>Whitsunday Island, Whitsunday Islands</div>
+                <div>{{ item.Intro }}</div>
               </v-card-text>
 
               <v-card-actions class="articleMessage">
@@ -89,6 +87,11 @@ export default {
       try {
         let article = await restGetAll("article", { privacy: false });
         this.model = article.data;
+        // this.model.forEach(element => {
+        //   if (!element.covers) {
+        //     return (element.covers = "https://api.ixiaowai.cn/gqapi/gqapi.php"); //没有头像的就给一个随机头像
+        //   }
+        // });
       } catch (err) {
         console.log(err);
       }

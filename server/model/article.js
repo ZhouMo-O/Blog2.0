@@ -17,6 +17,10 @@ const Schema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    cover: {
+      type: String,
+      default: "https://api.ixiaowai.cn/gqapi/gqapi.php",
+    },
     read: {
       type: Number,
       default: 0,

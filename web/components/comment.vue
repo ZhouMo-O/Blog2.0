@@ -51,7 +51,7 @@
             >
               <v-img
                 class="elevation-6"
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                src="http://api.btstu.cn/sjtx/api.php?lx=c1&format=images"
               ></v-img> </v-list-item-avatar
           ></a>
 

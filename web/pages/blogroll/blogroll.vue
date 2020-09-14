@@ -55,7 +55,7 @@ export default {
       this.model.forEach(element => {
         if (!element.blogRollIcon) {
           return (element.blogRollIcon =
-            " http://api.btstu.cn/sjtx/api.php?lx=c1&format=images"); //没有头像的就给一个随机头像
+            "http://api.btstu.cn/sjtx/api.php?lx=c1&format=images"); //没有头像的就给一个随机头像
         }
       });
     }
