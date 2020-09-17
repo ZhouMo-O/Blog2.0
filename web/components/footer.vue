@@ -7,7 +7,14 @@
       class="indigo lighten-1 white--text text-center"
     >
       <v-card-text>
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          target
+          href="https://github.com/1181649328/Blog2.0"
+          class="mx-4 white--text"
+          icon
+        >
           <v-icon size="24px">{{ icon }}</v-icon>
         </v-btn>
       </v-card-text>
@@ -34,7 +41,9 @@
         <strong>Starry</strong>
         <br />
         <strong>
-          <a href="http://www.beian.gov.cn/portal/index.do/">渝ICP备2008467</a>
+          <a id="beian" href="http://www.beian.gov.cn/portal/index.do/"
+            >渝ICP备2008467</a
+          >
         </strong>
       </v-card-text>
     </v-card>
@@ -45,7 +54,7 @@
 import tagCloud from "./tagCloud";
 export default {
   data: () => ({
-    icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
+    icons: ["mdi-github ", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
   }),
   components: {
     tagCloud
@@ -53,4 +62,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#beian {
+  color: aliceblue;
+}
+</style>
