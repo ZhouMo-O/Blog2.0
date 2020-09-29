@@ -77,10 +77,10 @@ export default {
   data: () => ({
     overlay: false,
     tagData: {},
-    model: []
+    model: [],
   }),
   props: {
-    articleId: { type: String }
+    articleId: { type: String },
   },
   methods: {
     async getAllarticle() {
@@ -105,15 +105,15 @@ export default {
       } catch (error) {
         console.log(err);
       }
-    }
+    },
   },
   mounted() {
     this.articleId ? this.getRelatedTagArticle() : this.getAllarticle();
-  }
+  },
 };
 </script>
 
-<style scoped>
+<style >
 .articleMessage {
   position: relative;
 }

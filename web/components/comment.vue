@@ -43,7 +43,7 @@
     <v-card class="commentList" v-for="com in commentList" :key="com._id">
       <v-card :flat="true" max-width="100%">
         <v-list-item class="grow">
-          <a target="true" v-bind:href="com.site">
+          <a target="true" v-bind:href="`http://${com.site}`">
             <v-list-item-avatar
               :target="true"
               :href="com.site"
@@ -132,22 +132,22 @@ export default {
         domain: "",
         email: "",
         content: "",
-        blogId: this.blogId
+        blogId: this.blogId,
       },
       nameRules: [
-        v => !!v || "您贵姓？",
-        v => (v && v.length <= 10) || "超“十”了"
+        (v) => !!v || "您贵姓？",
+        (v) => (v && v.length <= 10) || "超“十”了",
       ],
       email: "",
       emailRules: [
-        v => !!v || "邮件是必须的，收到了回复会以邮件形式通知你",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "邮件是必须的，收到了回复会以邮件形式通知你",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
-      commentContent: [v => !!v || "多少说一句"]
+      commentContent: [(v) => !!v || "多少说一句"],
     };
   },
   props: {
-    blogId: { type: String }
+    blogId: { type: String },
   },
   methods: {
     async submit() {
@@ -169,7 +169,7 @@ export default {
     showComment(com) {
       this.label = `回复 ${com.name}：`;
       const nowStatus = com.isShow;
-      this.commentList.forEach(item => {
+      this.commentList.forEach((item) => {
         item.isShow = false;
       });
       com.isShow = !nowStatus;
@@ -178,16 +178,16 @@ export default {
     },
     async getArticleComment() {
       let comment = await restGetAll("comment", { blogId: this.blogId });
-      this.commentList = comment.data.map(item => {
+      this.commentList = comment.data.map((item) => {
         this.$set(item, "isShow", false); //隐藏当前评论组件
         return item;
       });
       console.log(this.commentList);
-    }
+    },
   },
   mounted() {
     this.getArticleComment();
-  }
+  },
 };
 </script>
 
