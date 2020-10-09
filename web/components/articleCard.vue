@@ -35,7 +35,7 @@
               <v-card-actions class="articleMessage">
                 <!-- time -->
                 <p class="overline">
-                  {{ item.createTime.slice(0, 9) }}
+                  {{ item.createTime.slice(0, 10) }}
                 </p>
                 <div class="likeAndRead">
                   <!-- read -->

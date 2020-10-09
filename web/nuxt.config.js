@@ -1,3 +1,5 @@
+const { TRUE } = require("node-sass");
+
 const colors = require("vuetify/es5/util/colors").default;
 require("@nuxtjs/dotenv").config;
 module.exports = {
@@ -16,7 +18,9 @@ module.exports = {
         content: "Nuxt博客，个人博客，前端开发，后端开发，服务端渲染"
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" },{ rel: "stylesheet" , href: "./fonts/googleFont.css" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" },
+    { rel: "stylesheet" , href: "./fonts/googleFont.css" },
+    { rel: "stylesheet" , href: "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" }]
   },
   /*
    ** Customize the progress-bar color
