@@ -39,7 +39,7 @@ module.exports = {
    */
   modules: [["@nuxtjs/dotenv"], ["@nuxtjs/axios"]],
   axios: {
-    // proxyHeaders: false
+    proxyHeaders: false
   },
   /*
    ** vuetify module configuration
