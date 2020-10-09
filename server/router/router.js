@@ -43,7 +43,6 @@ module.exports = (app) => {
   });
 
   router.put("/:id", async (req, res) => {
-    req.body.createTime = require("moment")(req.body.createTime).format("YYYY/MM/DD h:mm:ss");
     const item = await req.Model.findByIdAndUpdate(req.params.id, req.body);
     console.log(`更新 ${req.params.id}`);
     res.send(item);
