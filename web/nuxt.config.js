@@ -1,5 +1,3 @@
-const { TRUE } = require("node-sass");
-
 const colors = require("vuetify/es5/util/colors").default;
 require("@nuxtjs/dotenv").config;
 module.exports = {
