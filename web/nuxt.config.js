@@ -16,7 +16,7 @@ module.exports = {
         content: "Nuxt博客，个人博客，前端开发，后端开发，服务端渲染"
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" },{ rel: "stylesheet" , href: "./fonts/googleFont.css" }]
   },
   /*
    ** Customize the progress-bar color
@@ -47,6 +47,7 @@ module.exports = {
    */
   vuetify: {
     customVariables: ["~/assets/variables.scss"],
+    defaultAssets: false,
     theme: {
       dark: false,
       themes: {
