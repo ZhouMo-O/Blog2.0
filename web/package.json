@@ -20,10 +20,8 @@
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
-    "node-sass": "^4.14.1",
     "nodemon": "^1.18.9",
-    "sass-loader": "^10.0.2"
+    "@nuxtjs/vuetify": "^1.0.0"
   },
   "config": {
     "nuxt": {
