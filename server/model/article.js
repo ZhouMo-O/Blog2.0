@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const Schema = new mongoose.Schema(
   {
     title: {
@@ -42,13 +43,13 @@ const Schema = new mongoose.Schema(
     createTime: {
       type: String,
       default: () => {
-        return new Date().toLocaleString();
+        return moment().format("YYYY/MM/DD h:mm:ss");
       },
     },
     upDateTime: {
       type: String,
       default: () => {
-        return new Date().toLocaleString();
+        return moment().format("YYYY/MM/DD h:mm:ss");
       },
     },
   },
