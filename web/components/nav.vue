@@ -1,9 +1,16 @@
 <template>
   <div v-resize="ifSmallScreen">
     <v-navigation-drawer v-model="drawer" :disable-resize-watcher="true" app>
-      <v-avatar color="indigo" size="36">
-        <span class="white--text headline">36</span>
-      </v-avatar>
+      <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="https://www.blog5.net.cn/starry.ico"></v-img>
+        </v-list-item-avatar>
+        <v-list-item-title>Starry-周末</v-list-item-title>
+        <v-btn icon @click.stop="drawer = !drawer">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+      </v-list-item>
+
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -44,8 +51,8 @@
           <v-btn value="留言板">
             留言板
           </v-btn>
-          <v-btn to="/about/aboutMe" value="关于我">
-            关于我
+          <v-btn to="/about/about" value="关于">
+            关于
           </v-btn>
         </v-btn-toggle>
       </v-expand-transition>
@@ -69,10 +76,25 @@ export default {
           title: "首页",
           to: "/"
         },
+        // {
+        //   icon: "mdi-book-open-outline",
+        //   title: "归档",
+        //   to: "#"
+        // },
         {
           icon: "mdi-book-open-outline",
           title: "友情链接",
           to: "/blogroll/blogroll"
+        },
+        // {
+        //   icon: "mdi-book-open-outline",
+        //   title: "留言板",
+        //   to: "/"
+        // },
+        {
+          icon: "mdi-account-details ",
+          title: "关于",
+          to: "/about/about"
         }
       ],
       title: "Starry"

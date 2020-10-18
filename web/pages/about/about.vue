@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-img src="./aboutMe.png" class="articleTopCard">
-      <h2 class="text-center">关于我</h2>
+      <h2 class="text-center">关于</h2>
     </v-img>
     <v-container id="cardIndex">
       <v-card class="aboutMeIndex">
