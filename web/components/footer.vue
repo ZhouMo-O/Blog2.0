@@ -38,7 +38,7 @@
 
       <v-card-text class="white--text">
         {{ new Date().getFullYear() }} —
-        <strong>Starry</strong>
+        <strong>Starry-周末的个人博客</strong>
         <br />
         <strong>
           <a id="beian" href="http://www.beian.gov.cn/portal/index.do/"

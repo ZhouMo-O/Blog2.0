@@ -44,7 +44,7 @@
           <v-btn value="留言板">
             留言板
           </v-btn>
-          <v-btn value="关于我">
+          <v-btn to="/about/aboutMe" value="关于我">
             关于我
           </v-btn>
         </v-btn-toggle>
