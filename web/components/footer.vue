@@ -54,7 +54,7 @@
 import tagCloud from "./tagCloud";
 export default {
   data: () => ({
-    icons: ["mdi-github ", "mdi-twitter", "mdi-linkedin", "mdi-instagram"]
+    icons: ["mdi-github"]
   }),
   components: {
     tagCloud

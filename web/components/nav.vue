@@ -42,15 +42,15 @@
           <v-btn to="/" value="首页">
             首页
           </v-btn>
-          <v-btn value="归档">
+          <!-- <v-btn value="归档">
             归档
-          </v-btn>
+          </v-btn> -->
           <v-btn to="/blogroll/blogroll" value="友链">
             友链
           </v-btn>
-          <v-btn value="留言板">
+          <!-- <v-btn value="留言板">
             留言板
-          </v-btn>
+          </v-btn> -->
           <v-btn to="/about/about" value="关于">
             关于
           </v-btn>
