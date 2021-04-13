@@ -15,6 +15,21 @@ class User {
     console.log(
       `userName ${this.userName} passWord ${this.passWord} clientSvgCode ${this.svgCode} sessionSvgCode ${this.sessionCaptcha}`
     );
+
+    this.initUser();
+  }
+
+  //注册一个默认用户
+  async initUser() {
+    let user = await this.userModel.findOne({ userName: "starryAdmin" });
+    if (user) {
+      return true;
+    }
+    let createUser = await this.userModel.create({
+      userName: "starryAdmin",
+      passWord: "123456789",
+    });
+    return { code: 1, data: createUser };
   }
 
   //用户注册
