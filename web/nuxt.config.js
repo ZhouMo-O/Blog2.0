@@ -1,16 +1,6 @@
 const colors = require("vuetify/es5/util/colors").default;
 require("@nuxtjs/dotenv").config;
 module.exports = {
-  render: {
-    csp: {
-      hashArgorism: 'sha256',
-      policies: {
-        'script-src': [
-          "'sha256-4RS22DYeB7U14dra4KcQYxmwt5HkOInieXK1NUMBmQI='" // this line resolves the violation
-        ]
-      }
-    }
-  },
   mode: "universal",
   /*
    ** Headers of the page
@@ -27,8 +17,8 @@ module.exports = {
       }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "starry.ico" },
-    { rel: "stylesheet", href: "./fonts/googleFont.css" },
-    { rel: "stylesheet", href: "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" }]
+    { rel: "stylesheet" , href: "./fonts/googleFont.css" },
+    { rel: "stylesheet" , href: "https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css" }]
   },
   /*
    ** Customize the progress-bar color
@@ -82,6 +72,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) { }
+    extend(config, ctx) {}
   }
 };
