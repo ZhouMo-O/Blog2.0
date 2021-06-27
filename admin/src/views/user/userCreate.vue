@@ -19,7 +19,7 @@
       <el-form-item label="用户密码" prop="passWord">
         <el-input class="projectFeatures" v-model="model.passWord"></el-input>
       </el-form-item>
-      <el-form-item style="margin-top:1rem">
+      <el-form-item style="margin-top: 1rem">
         <el-button class="sendProjectItem" type="primary" native-type="subumit"
           >保存</el-button
         >
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { userRegister } from "../../Api/api";
+import { restUpdata, userRegister, restgetOne } from "../../Api/api";
 export default {
   name: "createProject",
   props: {
@@ -62,13 +62,13 @@ export default {
   },
   methods: {
     async fetchItem() {
-      const res = await this.$http.get(`/rest/user/${this.id}`);
+      const res = await restgetOne(`user`, this.id);
       this.model = res.data;
     },
     async save(formName) {
       await this.$refs[formName].validate(); //校验表单上是否有错误
       if (this.id) {
-        await this.$http.put(`rest/user/${this.id}`, this.model);
+        await restUpdata(`user`, this.id, this.model);
       } else {
         await userRegister(this.model);
         this.$notify({

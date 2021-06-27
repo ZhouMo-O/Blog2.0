@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { restgetAll } from "../../Api/api";
+import { restDeleteOne, restgetAll } from "../../Api/api";
 export default {
   name: "mcList",
   data() {
@@ -45,7 +45,7 @@ export default {
         cancelButtonText: "取消",
       }).then(async () => {
         console.log(row._id);
-        const data = await this.$http.delete(`/rest/user/${row._id}`);
+        const data = await restDeleteOne("user", row._id);
         this.$notify({
           title: "成功",
           type: "success",
