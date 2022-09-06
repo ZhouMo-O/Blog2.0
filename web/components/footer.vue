@@ -45,6 +45,11 @@
             >渝ICP备2008467</a
           >
         </strong>
+        <strong>
+          <a id="beian" href="https://www.beian.gov.cn/portal/index.do"
+            >渝公安备50011402500548</a
+          >
+        </strong>
       </v-card-text>
     </v-card>
   </v-footer>
