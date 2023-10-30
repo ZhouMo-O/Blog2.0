@@ -41,8 +41,8 @@
         <strong>Starry-周末的个人博客</strong>
         <br />
         <strong>
-          <a id="beian" href="http://www.beian.gov.cn/portal/index.do/"
-            >渝ICP备2008467</a
+          <a id="beian" href="https://beian.mps.gov.cn/#/query/webSearch"
+            >渝ICP备20008467号-1</a
           >
         </strong>
         <strong>
