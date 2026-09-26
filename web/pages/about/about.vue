@@ -38,12 +38,23 @@
 </template>
 
 <script>
+import { pageHead } from "../../utils/seo";
+
 export default {
   data() {
     return {
       aboutMe: "关于我",
       aboutBlog: "关于博客"
     };
+  },
+  head() {
+    return pageHead({
+      title: "关于",
+      description:
+        "关于 Starry-周末的个人博客：一个从零开始学习前端的开发者，记录全栈开发、服务端渲染与开源实践。",
+      path: "/about/about",
+      type: "website"
+    });
   }
 };
 </script>
