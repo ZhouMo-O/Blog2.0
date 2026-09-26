@@ -71,6 +71,19 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.local
+.env.*.local
+*.env
+!.env.example
+!*.env.example
+!*.env.local.example
+
+# 备份与凭据（防止误提交）
+*.bak
+*.pem
+*.key
+backup/
+blog-backup*.tar.gz
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
