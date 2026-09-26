@@ -14,7 +14,7 @@
       </template>
     </v-snackbar>
     <v-card color="#F0F0F0" class="articleTopCard">
-      <h2 class="text-center">{{ model.title }}</h2>
+      <h1 class="text-center articleTitle">{{ model.title }}</h1>
     </v-card>
     <v-container id="articleContainer">
       <div class="articleMessage">
@@ -38,18 +38,9 @@
       <v-card class="articleBody">
         <div class="article">
           <div class="mavonEditor">
-            <no-ssr>
-              <mavon-editor
-                previewBackground="#ffffff"
-                codeStyle="ascetic"
-                v-model="model.markdown"
-                :subfield="false"
-                defaultOpen="preview"
-                :toolbarsFlag="false"
-                :boxShadow="false"
-                :ishljs="true"
-              />
-            </no-ssr>
+            <!-- 正文改为服务端渲染好的 HTML：
+                 首屏无需等待 JS，搜索引擎也能直接抓取到全文 -->
+            <div class="markdown-body ssr-article-body" v-html="renderedHtml"></div>
           </div>
         </div>
         <like @showMessage="showMsg" :blogId="this.$route.params.id"></like>
@@ -63,17 +54,30 @@
 </template>
 
 <script>
-import {
-  restGetAll,
-  restGetOne,
-  restUpdata,
-  restPostData
-} from "../../api/api";
-
+import { restUpdata } from "../../api/api";
 import like from "../../components/like";
 import comment from "../../components/comment";
 import snackbar from "../../components/snackbar";
+import { pageHead, articleJsonLd, toDateString } from "../../utils/seo";
+
 export default {
+  // 服务端一次性拿到文章数据 + 渲染好的正文
+  async asyncData({ params, $axios }) {
+    const origin = process.server
+      ? process.env.SELF_URL || "http://127.0.0.1:3000"
+      : window.location.origin;
+    try {
+      const res = await $axios.$get(
+        origin + "/article-html/" + encodeURIComponent(params.id)
+      );
+      if (res && res.ok && res.article) {
+        return { model: res.article, renderedHtml: res.html || "" };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return { model: {}, renderedHtml: "" };
+  },
   data() {
     return {
       snackbar: false,
@@ -83,6 +87,7 @@ export default {
       valid: true,
       title: {},
       model: {},
+      renderedHtml: "",
       commentList: [],
       id: ""
     };
@@ -90,42 +95,45 @@ export default {
   props: {
     blogId: { type: String }
   },
-
   methods: {
     showMsg(data) {
       this.snackbar = true;
       this.text = data.msg;
       this.color = data.type;
     },
-    //更新阅读量
+    //更新阅读量（只在浏览器端记，避免爬虫抓取把阅读量刷上去）
     async updateArticleInfo() {
+      if (!this.model || typeof this.model.read !== "number") return;
       let readNum = { read: ++this.model.read };
-      await restUpdata("article", this.$route.params.id, readNum);
-    },
-
-    async getArticle() {
-      let article = await restGetOne("article", this.$route.params.id);
-      this.model = article.data;
-      this.updateArticleInfo();
+      try {
+        await restUpdata("article", this.$route.params.id, readNum);
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
   components: { comment, snackbar, like },
   mounted() {
-    this.getArticle();
+    this.updateArticleInfo();
+  },
+  head() {
+    const a = this.model || {};
+    const id = a._id || this.$route.params.id;
+    return pageHead({
+      title: a.title || "文章",
+      description: a.Intro || (a.title ? "Starry-周末的个人博客文章：" + a.title : ""),
+      path: "/article/" + id,
+      type: "article",
+      image: a.cover,
+      publishedTime: toDateString(a.createTime),
+      modifiedTime: toDateString(a.upDateTime),
+      jsonld: articleJsonLd(a)
+    });
   }
 };
 </script>
 
 <style scoped>
-/* mavonEditor样式 */
-.markdown-body {
-  background: #ffffff !important;
-  min-width: 0px !important;
-  border: 0px;
-}
-
-/* end */
-
 .articleBody {
   position: relative;
   z-index: 0;
@@ -139,13 +147,13 @@ export default {
   width: 100vw;
   height: 45vh;
   background: #4f7da4;
-  /* border: 1px solid red !important; */
   background-size: cover;
 }
 
-h2 {
+.articleTitle {
   text-align: center;
   padding-top: 15vh;
+  color: white;
 }
 
 .articleBody {
@@ -154,7 +162,6 @@ h2 {
 
   position: relative;
   top: -100px;
-  /* border: 1px solid red; */
   z-index: 0;
 }
 
@@ -164,10 +171,74 @@ h2 {
   position: relative;
   top: -105px;
   z-index: 2;
-  /* border: 1px solid red; */
 }
 
 .articleIcon {
   font-size: 23px;
+}
+</style>
+
+<!-- v-html 注入的内容不会被 scoped 样式命中，因此正文排版规则写成全局样式 -->
+<style>
+.ssr-article-body {
+  background: #ffffff !important;
+  min-width: 0 !important;
+  border: 0;
+  padding: 16px;
+  line-height: 1.75;
+  word-wrap: break-word;
+  overflow-x: auto;
+}
+
+.ssr-article-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ssr-article-body h1,
+.ssr-article-body h2,
+.ssr-article-body h3,
+.ssr-article-body h4 {
+  margin: 20px 0 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.ssr-article-body pre {
+  padding: 12px !important;
+  background: #23241f !important;
+  overflow: auto;
+  border-radius: 4px;
+}
+
+.ssr-article-body pre code {
+  min-width: 0 !important;
+  background: transparent !important;
+  color: #cccccc !important;
+  box-shadow: none !important;
+}
+
+.ssr-article-body table {
+  border-collapse: collapse;
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.ssr-article-body table th,
+.ssr-article-body table td {
+  border: 1px solid #dfe2e5;
+  padding: 6px 10px;
+}
+
+.ssr-article-body blockquote {
+  border-left: 4px solid #dfe2e5;
+  padding-left: 12px;
+  color: #6a737d;
+  margin-left: 0;
+}
+
+.ssr-article-body a {
+  color: #1976d2;
 }
 </style>
