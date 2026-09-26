@@ -3,7 +3,6 @@
     <v-chip-group>
       <v-chip
         label
-        v-click="click"
         :to="`/tagCloud/${tag._id}`"
         color="#30B8E3"
         v-for="tag in tags"

@@ -5,9 +5,9 @@
         :sm="6"
         :md="4"
         :lg="3"
-        v-for="item in model"
+        v-for="item in list"
         :key="item._id"
-        id="articleCard"
+        class="articleCardCol"
       >
         <v-hover>
           <template v-slot="{ hover }">
@@ -35,7 +35,7 @@
               <v-card-actions class="articleMessage">
                 <!-- time -->
                 <p class="overline">
-                  {{ item.createTime.slice(0, 10) }}
+                  {{ (item.createTime || "").slice(0, 10) }}
                 </p>
                 <div class="likeAndRead">
                   <!-- read -->
@@ -67,53 +67,51 @@
 </template>
 
 <script>
-import { restGetAll, restGetOne } from "../api/api";
+import { restGetAll } from "../api/api";
 export default {
-  async asyncData({ $axios }) {
-    const ip = await $axios.$get("http://icanhazip.com");
-    console.log(ip);
-    return { ip };
-  },
   data: () => ({
     overlay: false,
     tagData: {},
-    model: [],
+    model: []
   }),
   props: {
     articleId: { type: String },
+    // 由页面 asyncData 在服务端预取后传入，使首屏与爬虫可直接拿到内容
+    articles: { type: Array, default: null }
+  },
+  computed: {
+    list() {
+      return this.articles !== null ? this.articles : this.model;
+    }
   },
   methods: {
     async getAllarticle() {
       try {
         let article = await restGetAll("article", { privacy: false });
         this.model = article.data;
-        // this.model.forEach(element => {
-        //   if (!element.covers) {
-        //     return (element.covers = "https://api.ixiaowai.cn/gqapi/gqapi.php"); //没有头像的就给一个随机头像
-        //   }
-        // });
       } catch (err) {
         console.log(err);
       }
     },
     async getRelatedTagArticle() {
       try {
-        console.log(this.articleId);
         let query = { privacy: false, relatedTag: this.articleId };
         let article = await restGetAll("article", query);
         this.model = article.data;
-      } catch (error) {
+      } catch (err) {
         console.log(err);
       }
-    },
+    }
   },
   mounted() {
+    // 页面已通过 SSR 提供数据时不再重复请求
+    if (this.articles !== null) return;
     this.articleId ? this.getRelatedTagArticle() : this.getAllarticle();
-  },
+  }
 };
 </script>
 
-<style >
+<style>
 .articleMessage {
   position: relative;
 }
