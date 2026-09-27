@@ -63,6 +63,7 @@ import {
   restPostData,
   restgetOne,
   uploadFile,
+  deleteFile,
   restUpdata,
   restgetAll,
 } from "../../Api/api";
@@ -86,8 +87,26 @@ export default {
       }
     },
 
+    // 编辑器里删除图片时，同步删除 OSS 上的对象，避免垃圾文件堆积。
+    // 注意：mavon-editor 的 imgDel 只给位置，需要在删除前拿到图片地址。
     async imgDel(pos) {
-      console.log(pos);
+      try {
+        const url = this.$refs.md && this.$refs.md.imgUrlMap
+          ? this.$refs.md.imgUrlMap[pos]
+          : "";
+        if (url) {
+          // OSS 对象名是 URL 中 host 之后的部分（可能带目录前缀）
+          const objectName = String(url).replace(/^https?:\/\/[^/]+\//, "");
+          if (objectName && objectName.indexOf("http") !== 0) {
+            await deleteFile(encodeURIComponent(objectName));
+            this.$message({ type: "success", message: "图片已删除" });
+          }
+        }
+      } catch (error) {
+        // 删除失败不影响正文编辑，仅提示
+        this.$message({ type: "warning", message: "图片删除失败，请稍后重试" });
+        console.log("imgDel error", error);
+      }
     },
 
     async getTag() {

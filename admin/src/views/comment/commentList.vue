@@ -15,24 +15,20 @@
         <el-button @click="sendComment" type="primary">确 定</el-button>
       </div>
     </el-dialog>
-    <el-table :data="items" stripe style="width: 100%">
+    <el-table :data="filteredItems" stripe style="width: 100%">
       <el-table-column prop="createTime" label="日期" width="180">
       </el-table-column>
-      <el-table-column prop="blogId" label="博客标题" width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="昵称"></el-table-column>
-      <el-table-column prop="site" label="网站"></el-table-column>
+      <el-table-column prop="name" label="昵称" width="120"></el-table-column>
       <el-table-column prop="content" label="内容"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
 
-      <el-table-column fixed="right" label="操作" width="300">
+      <el-table-column fixed="right" label="操作" width="320">
         <template slot="header" slot-scope="scope">
           <el-input
-            @input="SearchTable"
             v-model="search"
             size="mini"
-            :key="scope._id"
-            placeholder="输入版本号搜索"
+            clearable
+            placeholder="输入昵称/内容搜索"
           />
         </template>
         <template slot-scope="scope">
@@ -54,15 +50,9 @@
   </div>
 </template>
 <script>
-import {
-  restgetAll,
-  restDeleteOne,
-  deleteFile,
-  filterBlog,
-  postComment,
-} from "../../Api/api";
+import { restgetAll, restDeleteOne, postComment } from "../../Api/api";
 export default {
-  name: "softWareList",
+  name: "commentList",
   props: { id: {} },
   data() {
     return {
@@ -81,13 +71,23 @@ export default {
       formLabelWidth: "120px",
     };
   },
+  computed: {
+    filteredItems() {
+      const kw = (this.search || "").trim().toLowerCase();
+      if (!kw) return this.items;
+      return this.items.filter((item) => {
+        const hay = [item.name, item.content, item.email, item.createTime]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return hay.indexOf(kw) !== -1;
+      });
+    },
+  },
   methods: {
     async fetch() {
       const data = await restgetAll("comment");
       this.items = data.data;
-    },
-    SearchTable() {
-      console.log("1");
     },
     async writeBack(row) {
       this.dialogFormVisible = true;
@@ -108,7 +108,7 @@ export default {
     },
 
     async remove(row) {
-      this.$confirm(`确定删除 ${row.title} 吗？,该操作不可逆`, "确认信息", {
+      this.$confirm(`确定删除这条评论吗？该操作不可逆`, "确认信息", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -128,7 +128,7 @@ export default {
     },
   },
   created() {
-    this.id ? this.findcommentTag() : this.fetch();
+    this.fetch();
   },
 };
 </script>

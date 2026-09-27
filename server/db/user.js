@@ -12,22 +12,36 @@ class User {
     this.svgCode = svgCode;
     this.sessionCaptcha = sessionCaptcha;
     this.token = token;
-    console.log(
-      `userName ${this.userName} passWord ${this.passWord} clientSvgCode ${this.svgCode} sessionSvgCode ${this.sessionCaptcha}`
-    );
+    //仅记录登录尝试的用户名，绝不打印明文密码
+    if (userName) {
+      console.log(`登录尝试 userName: ${this.userName}`);
+    }
 
     this.initUser();
   }
 
-  //注册一个默认用户
+  //初始化一个默认管理员。
+  //原实现把账号密码硬编码在源码里（starryAdmin / 123456789），
+  //开源后等于把后台口令公开，这里改为：
+  //  1) 仅在数据库中还没有任何用户时才创建；
+  //  2) 密码从环境变量 ADMIN_INIT_PASSWORD 读取，未配置则不自动建号。
   async initUser() {
-    let user = await this.userModel.findOne({ userName: "starryAdmin" });
-    if (user) {
+    const existUser = await this.userModel.findOne({});
+    if (existUser) {
       return true;
     }
+
+    const initPassword = process.env.ADMIN_INIT_PASSWORD;
+    if (!initPassword) {
+      console.log(
+        "未配置 ADMIN_INIT_PASSWORD，跳过默认管理员创建。如需初始化请设置该环境变量后重启。"
+      );
+      return false;
+    }
+
     let createUser = await this.userModel.create({
-      userName: "starryAdmin",
-      passWord: "123456789",
+      userName: process.env.ADMIN_INIT_USERNAME || "starryAdmin",
+      passWord: initPassword,
     });
     return { code: 1, data: createUser };
   }
@@ -39,7 +53,9 @@ class User {
       return { code: 0, message: "已存在相同的用户名!" };
     }
 
-    if (this.passWord < 6) {
+    //原实现是 this.passWord < 6，字符串与数字比较结果恒不正确，
+    //必须用长度判断
+    if (!this.passWord || this.passWord.length < 6) {
       return { code: 0, message: "密码不可以小于6位" };
     }
     let createUser = await this.userModel.create({

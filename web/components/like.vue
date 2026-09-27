@@ -90,13 +90,52 @@
 </template>
 
 <script>
-import { like, beenLiked, restGetOne } from "../api/api";
+import { like, beenLiked, restGetOne, counter } from "../api/api";
+
+// 匿名访客标识：首次访问时生成并持久化，用于让后端区分不同读者
+// （后端会把它与 IP、UA 一起哈希成点赞身份，避免同一出口 IP 下互相干扰）
+const VISITOR_KEY = "starry_visitor_id";
+function getVisitorId() {
+  if (typeof localStorage === "undefined") return "";
+  let id = localStorage.getItem(VISITOR_KEY);
+  if (!id) {
+    id =
+      Date.now().toString(36) +
+      Math.random().toString(36).slice(2, 10);
+    localStorage.setItem(VISITOR_KEY, id);
+  }
+  return id;
+}
+function isLikedLocally(articleId) {
+  if (typeof localStorage === "undefined") return false;
+  try {
+    const arr = JSON.parse(localStorage.getItem("starry_liked") || "[]");
+    return arr.indexOf(articleId) !== -1;
+  } catch (e) {
+    return false;
+  }
+}
+function setLikedLocally(articleId, liked) {
+  if (typeof localStorage === "undefined") return;
+  let arr = [];
+  try {
+    arr = JSON.parse(localStorage.getItem("starry_liked") || "[]");
+  } catch (e) {
+    arr = [];
+  }
+  const i = arr.indexOf(articleId);
+  if (liked && i === -1) arr.push(articleId);
+  if (!liked && i !== -1) arr.splice(i, 1);
+  localStorage.setItem("starry_liked", JSON.stringify(arr));
+}
+
 export default {
   data() {
     return {
       classModel: "paw-button",
       articleId: this.blogId,
-      articleInfo: {}
+      articleInfo: {},
+      liked: false
     };
   },
   props: {
@@ -104,9 +143,29 @@ export default {
   },
   methods: {
     async like() {
-      let articleData = { articleId: this.articleId }; //打包数据
-      let res = await like(articleData);
+      let articleData = { articleId: this.articleId, visitorId: getVisitorId() }; //打包数据
+      let res;
+      try {
+        res = await like(articleData);
+      } catch (err) {
+        // 后端限流/需要验证码时给出提示，普通读者几乎不会触发
+        const msg =
+          err && err.response && err.response.data && err.response.data.msg
+            ? err.response.data.msg
+            : "操作失败，请稍后再试";
+        this.$emit("showMessage", { msg, type: "error" });
+        return;
+      }
       console.log(res);
+
+      // 依据后端返回的真实结果同步本地状态，避免「前端动画加了 1、后端其实取消」的不一致
+      const cancelled = res && res.data && res.data.msg === "取消点赞";
+      this.liked = !cancelled;
+      setLikedLocally(this.articleId, this.liked);
+
+      // 计数动画结束后，向后端重新对账一次真实点赞数，
+      // 避免长时间停留/多标签页导致的数字漂移
+      this.refreshArticleInfo();
 
       let confettiAmount = 60,
         confettiColors = [
@@ -121,8 +180,7 @@ export default {
           return Math.floor(Math.random() * (max - min + 1) + min);
         },
         createConfetti = to => {
-          let elem = document.createElement("i"),
-            set = Math.random() < 0.5 ? -1 : 1; // eslint-disable-line no-unused-vars
+          let elem = document.createElement("i");
           elem.style.setProperty("--x", random(-260, 260) + "px");
           elem.style.setProperty("--y", random(-160, 160) + "px");
           elem.style.setProperty("--r", random(0, 360) + "deg");
@@ -133,25 +191,27 @@ export default {
 
       document.querySelectorAll(".paw-button").forEach(elem => {
         let number = elem.children[1].textContent;
-        if (!elem.classList.contains("animation")) {
-          elem.classList.add("animation");
-          for (let i = 0; i < confettiAmount; i++) {
-            createConfetti(elem);
+        if (!cancelled) {
+          if (!elem.classList.contains("animation")) {
+            elem.classList.add("animation");
+            for (let i = 0; i < confettiAmount; i++) {
+              createConfetti(elem);
+            }
+            setTimeout(() => {
+              elem.classList.add("confetti");
+              setTimeout(() => {
+                elem.classList.add("liked");
+                elem.children[1].textContent = parseInt(number) + 1;
+              }, 400);
+              setTimeout(() => {
+                elem.querySelectorAll("i").forEach(i => i.remove());
+              }, 600);
+            }, 260);
+            this.$emit("showMessage", {
+              msg: "点赞成功,感谢你的支持，我会继续加油。",
+              type: "info"
+            });
           }
-          setTimeout(() => {
-            elem.classList.add("confetti");
-            setTimeout(() => {
-              elem.classList.add("liked");
-              elem.children[1].textContent = parseInt(number) + 1;
-            }, 400);
-            setTimeout(() => {
-              elem.querySelectorAll("i").forEach(i => i.remove());
-            }, 600);
-          }, 260);
-          this.$emit("showMessage", {
-            msg: "点赞成功,感谢你的支持，我会继续加油。",
-            type: "info"
-          });
         } else {
           elem.classList.remove("animation", "liked", "confetti");
           elem.children[1].textContent = parseInt(number) - 1;
@@ -163,18 +223,40 @@ export default {
       });
     },
     async alreadLike() {
-      const res = await beenLiked(this.articleId);
-      const resCode = res.data.code;
-      if (resCode == "200") {
+      // 优先用本地记录判断，避免后端身份变化导致状态丢失
+      if (isLikedLocally(this.articleId)) {
+        this.liked = true;
         this.classModel = "paw-button animation confetti liked";
-      } else if (resCode) {
-        this.classModel = "paw-button";
+        return;
+      }
+      try {
+        const res = await beenLiked(this.articleId);
+        const resCode = res.data.code;
+        if (resCode == "200") {
+          this.liked = true;
+          this.classModel = "paw-button animation confetti liked";
+        }
+      } catch (e) {
+        // 忽略，保持未点赞状态
       }
     },
     async getArticleInfo() {
       let articleInfo = await restGetOne("article", this.articleId);
       this.articleInfo = articleInfo.data;
       console.log(this.articleInfo);
+    },
+    // 点赞/取消后拉一次最新计数（点赞数已由后端原子增减，这里只做显示对账）
+    async refreshArticleInfo() {
+      try {
+        const res = await restGetOne("article", this.articleId);
+        if (res && res.data && typeof res.data.like === "number") {
+          this.$set(this.articleInfo, "like", res.data.like);
+          // 顺便同步父页面头部那颗心形 chip 的数字
+          this.$emit("likeChanged", res.data.like);
+        }
+      } catch (e) {
+        // 对账失败不影响主流程，保留动画结果
+      }
     }
   },
   mounted() {
@@ -183,6 +265,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 #like {

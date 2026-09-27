@@ -114,14 +114,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  //原先这里 next("/login") 之后又无条件调用了一次 next()，
+  //会导致重复导航、并且受保护页面的组件仍被实例化（进而发起接口请求）。
+  //命中未登录分支时必须 return。
   if (!to.meta.isPublic && !localStorage.token) {
     Message({
       type: "error",
       message: "请先登录",
     });
-    next("/login");
+    return next("/login");
   }
-  next();
+  return next();
 });
 
 export default router;

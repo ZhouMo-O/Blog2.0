@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="items" stripe style="width: 100%">
+  <el-table :data="filteredItems" stripe style="width: 100%">
     <el-table-column prop="createTime" label="日期" width="180">
     </el-table-column>
     <el-table-column prop="title" label="博客标题" width="180">
@@ -17,11 +17,10 @@
     <el-table-column fixed="right" label="操作" width="300">
       <template slot="header" slot-scope="scope">
         <el-input
-          @input="SearchTable"
           v-model="search"
           size="mini"
-          :key="scope._id"
-          placeholder="输入版本号搜索"
+          clearable
+          placeholder="输入标题搜索"
         />
       </template>
       <template slot-scope="scope">
@@ -45,14 +44,9 @@
   </el-table>
 </template>
 <script>
-import {
-  restgetAll,
-  restDeleteOne,
-  deleteFile,
-  filterBlog,
-} from "../../Api/api";
+import { restgetAll, restDeleteOne } from "../../Api/api";
 export default {
-  name: "softWareList",
+  name: "articleList",
   props: { id: {} },
   data() {
     return {
@@ -60,13 +54,25 @@ export default {
       search: "",
     };
   },
+  computed: {
+    // 原先搜索框绑定了 @input="SearchTable"，而 SearchTable 只有一句
+    // console.log("1") —— 输入任何关键字都没有反应。改为本地即时过滤。
+    filteredItems() {
+      const kw = (this.search || "").trim().toLowerCase();
+      if (!kw) return this.items;
+      return this.items.filter((item) => {
+        const hay = [item.title, item.createTime, item.Intro]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return hay.indexOf(kw) !== -1;
+      });
+    },
+  },
   methods: {
     async fetch() {
       const data = await restgetAll("article");
       this.items = data.data;
-    },
-    SearchTable() {
-      console.log("1");
     },
 
     async remove(row) {
@@ -77,10 +83,6 @@ export default {
       })
         .then(async () => {
           await restDeleteOne("article", row._id);
-          // if (!row.fileName == " " || !row.fileName == undefined) {
-          //   //如果根本上传文件，就不用去后台删除文件了。
-          //   await deleteFile(row.fileName);
-          // }
           this.fetch();
           this.$notify({
             title: "成功",
@@ -94,7 +96,7 @@ export default {
     },
   },
   created() {
-    this.id ? this.findarticleTag() : this.fetch();
+    this.fetch();
   },
 };
 </script>

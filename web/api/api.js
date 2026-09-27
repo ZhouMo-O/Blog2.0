@@ -21,6 +21,11 @@ let restDeleteOne = async (url, parmas) => {
   return await http.delete(`rest/${url}/${parmas}`);
 };
 
+//计数（阅读量/点赞数/评论数）：读者侧无需登录，只允许字段原子 +/-1
+let counter = async (field, id, delta = 1) => {
+  return await http.post(`counter/article/${id}`, { field, delta });
+};
+
 //点赞
 let like = async articleData => {
   return await http.post(`like`, articleData);
@@ -47,6 +52,7 @@ export {
   restUpdata,
   restPostData,
   restDeleteOne,
+  counter,
   like,
   beenLiked,
   likeSum,

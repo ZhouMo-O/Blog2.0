@@ -1,17 +1,16 @@
 <template>
-  <el-table :data="items" stripe style="width: 100%">
+  <el-table :data="filteredItems" stripe style="width: 100%">
     <el-table-column prop="createTime" label="日期" width="180">
     </el-table-column>
-    <el-table-column prop="tagName" label="博客标题" width="180">
+    <el-table-column prop="tagName" label="标签名称" width="180">
     </el-table-column>
 
     <el-table-column fixed="right" label="操作" width="300">
       <template slot="header" slot-scope="scope">
         <el-input
-          @input="SearchTable"
           v-model="search"
           size="mini"
-          :key="scope._id"
+          clearable
           placeholder="输入标签搜索"
         />
       </template>
@@ -36,12 +35,7 @@
   </el-table>
 </template>
 <script>
-import {
-  restgetAll,
-  restDeleteOne,
-  deleteFile,
-  filterBlog,
-} from "../../Api/api";
+import { restgetAll, restDeleteOne } from "../../Api/api";
 export default {
   name: "tagList",
   props: { id: {} },
@@ -51,17 +45,27 @@ export default {
       search: "",
     };
   },
+  computed: {
+    filteredItems() {
+      const kw = (this.search || "").trim().toLowerCase();
+      if (!kw) return this.items;
+      return this.items.filter((item) => {
+        const hay = [item.tagName, item.createTime]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+        return hay.indexOf(kw) !== -1;
+      });
+    },
+  },
   methods: {
     async fetch() {
       const data = await restgetAll("tag");
       this.items = data.data;
     },
-    SearchTable() {
-      console.log("1");
-    },
 
     async remove(row) {
-      this.$confirm(`确定删除 ${row.title} 吗？,该操作不可逆`, "确认信息", {
+      this.$confirm(`确定删除 ${row.tagName} 吗？,该操作不可逆`, "确认信息", {
         distinguishCancelAndClose: true,
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -81,7 +85,7 @@ export default {
     },
   },
   created() {
-    this.id ? this.findtagTag() : this.fetch();
+    this.fetch();
   },
 };
 </script>

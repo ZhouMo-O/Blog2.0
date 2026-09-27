@@ -54,11 +54,15 @@
 </template>
 
 <script>
-import { restUpdata } from "../../api/api";
+import { counter } from "../../api/api";
 import like from "../../components/like";
 import comment from "../../components/comment";
 import snackbar from "../../components/snackbar";
 import { pageHead, articleJsonLd, toDateString } from "../../utils/seo";
+
+//同一标签页内同一次访问只计一次，防止刷阅读量；
+//跨会话/重新打开仍会正常 +1
+const READ_ONCE_KEY = "starry_read_once";
 
 export default {
   // 服务端一次性拿到文章数据 + 渲染好的正文
@@ -101,12 +105,29 @@ export default {
       this.text = data.msg;
       this.color = data.type;
     },
-    //更新阅读量（只在浏览器端记，避免爬虫抓取把阅读量刷上去）
+    //更新阅读量。
+    //原先前端直接 PUT 整个文章对象 —— 在第一阶段给写操作加上登录鉴权后该请求会 401，
+    //阅读量不再增长；而且回传整个对象本身存在被篡改字段的风险。
+    //现在改为调用只接受白名单字段、仅允许 +/-1 的计数接口，且只在浏览器端记，避免爬虫刷量。
     async updateArticleInfo() {
-      if (!this.model || typeof this.model.read !== "number") return;
-      let readNum = { read: ++this.model.read };
       try {
-        await restUpdata("article", this.$route.params.id, readNum);
+        let seen = [];
+        try {
+          seen = JSON.parse(sessionStorage.getItem(READ_ONCE_KEY) || "[]");
+        } catch (e) {
+          seen = [];
+        }
+        if (seen.indexOf(this.$route.params.id) !== -1) return;
+        seen.push(this.$route.params.id);
+        sessionStorage.setItem(READ_ONCE_KEY, JSON.stringify(seen));
+      } catch (e) {
+        // sessionStorage 不可用时忽略去重，继续计数
+      }
+      try {
+        const res = await counter("read", this.$route.params.id, 1);
+        if (res && res.data && typeof res.data.read === "number") {
+          this.$set(this.model, "read", res.data.read);
+        }
       } catch (err) {
         console.log(err);
       }
